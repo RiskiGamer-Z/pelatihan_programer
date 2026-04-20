@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 11 - Database Dasar dan Alur CRUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 3: Database & Integrasi</span>
+            <h2>Pertemuan 11: Membuat Database, Tabel, Koneksi, dan Struktur CRUD</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Target pertemuan ini: siswa bisa membuat database di phpMyAdmin, membuat tabel dengan 2 cara, membuat koneksi sederhana, menyusun struktur file rapi, lalu menjalankan alur CRUD dasar.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Pembelajaran</h3>
+            <ul>
+                <li>Siswa bisa membuat database dan tabel melalui phpMyAdmin.</li>
+                <li>Siswa memahami 2 cara membuat tabel: manual (form) dan SQL.</li>
+                <li>Siswa memahami fungsi kolom umum tabel seperti <code>id</code>, <code>nama</code>, dan lainnya.</li>
+                <li>Siswa bisa membuat file <code>config.php</code> untuk koneksi sederhana ke database.</li>
+                <li>Siswa bisa menata struktur file project CRUD dengan rapi.</li>
+                <li>Siswa memahami alur kerja CRUD dari tambah data sampai hapus data.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Alur Besar Pertemuan 11</h3>
+            <ol>
+                <li>Buat database <code>pendaftaran_siswa</code> di phpMyAdmin.</li>
+                <li>Buat tabel <code>calon_siswa</code> dengan 2 metode (manual dan SQL).</li>
+                <li>Pahami arti setiap kolom tabel.</li>
+                <li>Buat file koneksi <code>config.php</code>.</li>
+                <li>Susun struktur file CRUD.</li>
+                <li>Jalankan contoh halaman: tampil data, tambah data, edit, hapus.</li>
+            </ol>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Langkah 1 - Membuat Database di phpMyAdmin</h3>
+            <ol>
+                <li>Aktifkan <strong>Apache</strong> dan <strong>MySQL</strong> di Laragon/XAMPP.</li>
+                <li>Buka phpMyAdmin di browser.</li>
+                <li>Klik tombol <strong>New</strong> (kiri atas).</li>
+                <li>Isi nama database: <code>pendaftaran_siswa</code>.</li>
+                <li>Klik <strong>Create</strong>.</li>
+            </ol>
+            <p><strong>Hasil yang diharapkan:</strong> database <code>pendaftaran_siswa</code> muncul di panel kiri.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Langkah 2 - Membuat Tabel dengan 2 Cara</h3>
+
+            <h4>Cara 1: Manual lewat Form phpMyAdmin</h4>
+            <ol>
+                <li>Klik database <code>pendaftaran_siswa</code>.</li>
+                <li>Pada bagian Create table, isi nama tabel: <code>calon_siswa</code>.</li>
+                <li>Isi jumlah kolom: <code>6</code>, lalu klik <strong>Go</strong>.</li>
+                <li>Isi kolom satu per satu sesuai tabel desain di bawah.</li>
+                <li>Set <code>id</code> sebagai <strong>PRIMARY</strong> dan centang <strong>A_I</strong> (Auto Increment).</li>
+                <li>Klik <strong>Save</strong>.</li>
+            </ol>
+
+            <h4>Cara 2: Lewat SQL</h4>
+            <p>Buka tab <strong>SQL</strong>, lalu jalankan query berikut:</p>
+            <pre><code>CREATE TABLE calon_siswa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100) NOT NULL,
+    kelas VARCHAR(30) NOT NULL,
+    jurusan VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+            <p><strong>Hasil yang diharapkan:</strong> tabel <code>calon_siswa</code> berhasil dibuat.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Mengenal Fungsi Tiap Kolom Tabel</h3>
+            <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="text-align:left;">Kolom</th>
+                    <th style="text-align:left;">Tipe Data</th>
+                    <th style="text-align:left;">Wajib?</th>
+                    <th style="text-align:left;">Fungsi</th>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td><code>INT AUTO_INCREMENT PRIMARY KEY</code></td>
+                    <td>Ya</td>
+                    <td>Nomor unik tiap data. Dipakai untuk edit/hapus data tertentu.</td>
+                </tr>
+                <tr>
+                    <td><code>nama</code></td>
+                    <td><code>VARCHAR(100)</code></td>
+                    <td>Ya (<code>NOT NULL</code>)</td>
+                    <td>Menyimpan nama siswa.</td>
+                </tr>
+                <tr>
+                    <td><code>kelas</code></td>
+                    <td><code>VARCHAR(30)</code></td>
+                    <td>Ya (<code>NOT NULL</code>)</td>
+                    <td>Menyimpan kelas siswa (contoh: XI RPL 1).</td>
+                </tr>
+                <tr>
+                    <td><code>jurusan</code></td>
+                    <td><code>VARCHAR(50)</code></td>
+                    <td>Ya (<code>NOT NULL</code>)</td>
+                    <td>Menyimpan jurusan siswa (contoh: RPL).</td>
+                </tr>
+                <tr>
+                    <td><code>email</code></td>
+                    <td><code>VARCHAR(100)</code></td>
+                    <td>Ya (<code>NOT NULL</code>)</td>
+                    <td>Menyimpan email siswa.</td>
+                </tr>
+                <tr>
+                    <td><code>created_at</code></td>
+                    <td><code>TIMESTAMP DEFAULT CURRENT_TIMESTAMP</code></td>
+                    <td>Otomatis</td>
+                    <td>Mencatat waktu saat data dibuat.</td>
+                </tr>
+            </table>
+            <p><strong>Catatan:</strong> kolom bisa disesuaikan kebutuhan sekolah, tetapi <code>id</code> sangat disarankan selalu ada sebagai kunci utama.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Langkah 3 - Membuat Koneksi Sederhana (config.php)</h3>
+            <p>Mulai dari versi paling dasar dulu agar siswa paham alurnya:</p>
+            <pre><code>&lt;?php
+$host = 'localhost';
+$db = 'pendaftaran_siswa';
+$user = 'root';
+$pass = '';
+
+$koneksi = mysqli_connect($host, $user, $pass, $db);
+
+if ($koneksi) {
+    echo 'Koneksi database berhasil.';
+} else {
+    echo 'Koneksi gagal: ' . mysqli_connect_error();
+}
+?&gt;</code></pre>
+            <p><strong>Penjelasan singkat:</strong></p>
+            <ul>
+                <li>Jika koneksi berhasil, muncul teks <strong>Koneksi database berhasil.</strong></li>
+                <li>Jika koneksi gagal, muncul teks error agar siswa tahu sumber masalah.</li>
+                <li>Error umum: MySQL belum aktif, nama database salah, user/password salah.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>G. Struktur File CRUD yang Rapi</h3>
+            <pre><code>pendaftaran_siswa_app/
+├── config.php
+├── index.php
+├── tambah.php
+├── edit.php
+├── update.php
+├── hapus.php
+├── style.css
+└── assets/
+    └── script.js</code></pre>
+            <p><strong>Fungsi tiap file:</strong></p>
+            <ul>
+                <li><code>config.php</code>: menyimpan koneksi database (dipakai ulang).</li>
+                <li><code>index.php</code>: menampilkan data siswa (READ).</li>
+                <li><code>tambah.php</code>: form + proses tambah data (CREATE).</li>
+                <li><code>edit.php</code> dan <code>update.php</code>: ubah data (UPDATE).</li>
+                <li><code>hapus.php</code>: hapus data siswa (DELETE).</li>
+                <li><code>style.css</code>: pengaturan tampilan halaman.</li>
+                <li><code>assets/script.js</code>: validasi kecil di sisi browser.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>H. Contoh Kode Inti CRUD (Sederhana)</h3>
+
+            <h4>1. config.php</h4>
+            <pre><code>&lt;?php
+$host = 'localhost';
+$db = 'pendaftaran_siswa';
+$user = 'root';
+$pass = '';
+
+$koneksi = mysqli_connect($host, $user, $pass, $db);
+
+if (!$koneksi) {
+    die('Koneksi gagal: ' . mysqli_connect_error());
+}
+?&gt;</code></pre>
+
+            <h4>2. index.php (READ - menampilkan data)</h4>
+            <pre><code>&lt;?php
+require 'config.php';
+$query = mysqli_query($koneksi, "SELECT * FROM calon_siswa ORDER BY id DESC");
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Data Calon Siswa&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Data Calon Siswa&lt;/h2&gt;
+    &lt;a href="tambah.php"&gt;+ Tambah Data&lt;/a&gt;
+    &lt;table border="1" cellpadding="8" cellspacing="0"&gt;
+        &lt;tr&gt;
+            &lt;th&gt;No&lt;/th&gt;
+            &lt;th&gt;Nama&lt;/th&gt;
+            &lt;th&gt;Kelas&lt;/th&gt;
+            &lt;th&gt;Jurusan&lt;/th&gt;
+            &lt;th&gt;Email&lt;/th&gt;
+            &lt;th&gt;Aksi&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;?php $no = 1; while ($row = mysqli_fetch_assoc($query)): ?&gt;
+            &lt;tr&gt;
+                &lt;td&gt;&lt;?php echo $no++; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $row['nama']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $row['kelas']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $row['jurusan']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $row['email']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;a href="edit.php?id=&lt;?php echo $row['id']; ?&gt;"&gt;Edit&lt;/a&gt; |
+                    &lt;a href="hapus.php?id=&lt;?php echo $row['id']; ?&gt;" onclick="return confirm('Yakin hapus data?')"&gt;Hapus&lt;/a&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;?php endwhile; ?&gt;
+    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>3. tambah.php (CREATE - form dan simpan)</h4>
+            <pre><code>&lt;?php
+require 'config.php';
+
+if (isset($_POST['simpan'])) {
+    $nama = $_POST['nama'];
+    $kelas = $_POST['kelas'];
+    $jurusan = $_POST['jurusan'];
+    $email = $_POST['email'];
+
+    mysqli_query($koneksi, "INSERT INTO calon_siswa (nama, kelas, jurusan, email) VALUES ('$nama', '$kelas', '$jurusan', '$email')");
+    header('Location: index.php');
+    exit;
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Tambah Siswa&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Tambah Data Siswa&lt;/h2&gt;
+    &lt;form method="POST"&gt;
+        &lt;input type="text" name="nama" placeholder="Nama" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="text" name="kelas" placeholder="Kelas" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="text" name="jurusan" placeholder="Jurusan" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="email" name="email" placeholder="Email" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;button type="submit" name="simpan"&gt;Simpan&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>4. edit.php (UPDATE - halaman form edit)</h4>
+            <pre><code>&lt;?php
+// edit.php
+require 'config.php';
+
+if (!isset($_GET['id'])) {
+    die('ID tidak ditemukan di URL.');
+}
+
+$id = (int) $_GET['id'];
+$data = mysqli_query($koneksi, "SELECT * FROM calon_siswa WHERE id=$id");
+
+if (!$data || mysqli_num_rows($data) === 0) {
+    die('Data siswa tidak ditemukan.');
+}
+
+$row = mysqli_fetch_assoc($data);
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Edit Siswa&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Edit Data Siswa&lt;/h2&gt;
+    &lt;form method="POST" action="update.php"&gt;
+        &lt;input type="hidden" name="id" value="&lt;?php echo $row['id']; ?&gt;"&gt;
+        &lt;input type="text" name="nama" value="&lt;?php echo htmlspecialchars($row['nama']); ?&gt;" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="text" name="kelas" value="&lt;?php echo htmlspecialchars($row['kelas']); ?&gt;" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="text" name="jurusan" value="&lt;?php echo htmlspecialchars($row['jurusan']); ?&gt;" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="email" name="email" value="&lt;?php echo htmlspecialchars($row['email']); ?&gt;" required&gt;&lt;br&gt;&lt;br&gt;
+        &lt;button type="submit" name="update"&gt;Update&lt;/button&gt;
+        &lt;a href="index.php"&gt;Batal&lt;/a&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            <h4>5. update.php (UPDATE - proses simpan perubahan)</h4>
+            <pre><code>&lt;?php
+require 'config.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die('Akses tidak valid.');
+}
+
+$id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+$nama = $_POST['nama'] ?? '';
+$kelas = $_POST['kelas'] ?? '';
+$jurusan = $_POST['jurusan'] ?? '';
+$email = $_POST['email'] ?? '';
+
+if ($id <= 0 || $nama === '' || $kelas === '' || $jurusan === '' || $email === '') {
+    die('Data update tidak lengkap.');
+}
+
+$sql = "UPDATE calon_siswa SET nama='$nama', kelas='$kelas', jurusan='$jurusan', email='$email' WHERE id=$id";
+$update = mysqli_query($koneksi, $sql);
+
+if ($update) {
+    header('Location: index.php?pesan=update-berhasil');
+    exit;
+} else {
+    echo 'Update gagal: ' . mysqli_error($koneksi);
+}
+?&gt;</code></pre>
+            <p><strong>Kenapa kadang tombol Edit terasa tidak berfungsi?</strong> Biasanya karena <code>id</code> tidak terkirim, data berdasarkan <code>id</code> tidak ditemukan, atau query update gagal tetapi tidak ditampilkan pesannya. Versi ini menampilkan titik gagalnya agar mudah diperbaiki.</p>
+
+            <h4>6. hapus.php (DELETE)</h4>
+            <pre><code>&lt;?php
+require 'config.php';
+$id = (int) $_GET['id'];
+
+mysqli_query($koneksi, "DELETE FROM calon_siswa WHERE id=$id");
+header('Location: index.php');
+exit;
+?&gt;</code></pre>
+
+            <p><strong>Catatan pengajar:</strong> contoh di atas dibuat sesederhana mungkin untuk memahami alur. Pada pertemuan berikutnya, query akan ditingkatkan agar lebih aman dengan prepared statement.</p>
+        </div>
+
+        <div class="exercise-box">
+            <h3>I. Latihan Praktik (4 Soal)</h3>
+            <ol>
+                <li><strong>Latihan 1:</strong> Buat database <code>pendaftaran_siswa</code> dan tabel <code>calon_siswa</code> lewat cara manual phpMyAdmin.</li>
+                <li><strong>Latihan 2:</strong> Buat ulang tabel <code>calon_siswa</code> lewat query SQL.</li>
+                <li><strong>Latihan 3:</strong> Buat <code>config.php</code> sederhana dan tampilkan pesan berhasil/gagal koneksi.</li>
+                <li><strong>Latihan 4:</strong> Susun struktur file CRUD lalu jalankan halaman <code>index.php</code> untuk menampilkan data.</li>
+            </ol>
+          </div>
+
+        <div class="quest-box">
+            <h3>J. Checklist Kelulusan Pertemuan 11</h3>
+            <span class="quest-level">WAJIB TERPENUHI</span>
+            <ul>
+                <li>Database dan tabel berhasil dibuat dengan 2 metode.</li>
+                <li>Siswa bisa menjelaskan fungsi kolom utama (<code>id</code>, <code>nama</code>, <code>kelas</code>, dst).</li>
+                <li>File <code>config.php</code> berhasil konek ke database.</li>
+                <li>Struktur file project CRUD tersusun rapi.</li>
+                <li>Alur CRUD dasar bisa dijalankan (tampil, tambah, ubah, hapus).</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_10.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 10)</a>
+            <a href="pertemuan_12.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 12</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

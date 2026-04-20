@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 3 - Mega Sesi CSS & Layouting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>🎨 Fase 2: Front-End UI & Styling</span>
+            <h2>Pertemuan 3: Mengenal CSS (Cascading Style Sheets) & Layouting</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Buat website HTML kaku Anda menjadi cantik, hidup, dan
+                profesional dengan CSS & Flexbox!</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tiga Cara Menulis CSS & Selector</h3>
+            <p>Sesuai standar materi industri, terdapat <strong>3 pendekatan</strong> untuk menyisipkan CSS ke HTML
+                beserta cara memanggil elemennya (Selector):</p>
+            <ul>
+                <li><strong>1. External Style Sheet (Pendekatan Skalabilitas):</strong> Kode CSS dipisah pada file
+                    <code>.css</code> sendiri lalu di-import lewat tag <code>&lt;link&gt;</code>. (Pendekatan terbaik
+                    untuk proyek besar).
+                </li>
+                <li><strong>2. Internal Style Sheet (Pendekatan Cepat/Isolasi):</strong> Diletakkan di dalam tag
+                    <code>&lt;head&gt;</code> HTML menggunakan tag <code>&lt;style&gt;</code>.
+                </li>
+                <li><strong>3. Inline Style Sheet (Pendekatan Darurat):</strong> Diletakkan langsung di dalam tag HTML
+                    target, <em>misalnya:</em> <code>&lt;h1 style="color:red;"&gt;</code>.</li>
+            </ul>
+
+            <h4>💻 Contoh Kode 1: Internal CSS & Selector Element</h4>
+            <pre><code>&lt;head&gt;
+  &lt;style&gt;
+    /* CSS Internal: Mengubah semua tag &lt;p&gt; menjadi biru */
+    p { color: blue; font-family: Arial; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;Saya berwarna biru!&lt;/p&gt;
+&lt;/body&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Kode Pertama:</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><code>&lt;style&gt;</code>: Wadah/Kamar murni untuk menampung seluruh kode spesifikasi CSS agar
+                        tidak tersentuh atau bercampur baur berantakan dengan struktur dasar HTML.</li>
+                    <li><code>p { ... }</code>: Memanggil dan memilih <strong>seluruh pasukan tag
+                            <code>&lt;p&gt;</code></strong> (paragraf) yang ada di halaman ini sekaligus. Efisiensi luar
+                        biasa.</li>
+                </ul>
+            </div>
+
+            <h4>💻 Contoh Kode 2: Selector Class vs ID</h4>
+            <pre><code>&lt;style&gt;
+  /* Class digunakan massal (Tanda Titik) */
+  .tombol { background-color: yellow; padding: 10px; }
+  
+  /* ID bersifat unik/kritis (Tanda Pagar) */
+  #logo-utama { color: red; font-weight: bold; }
+&lt;/style&gt;
+
+&lt;button class="tombol"&gt;Klik 1&lt;/button&gt;
+&lt;button class="tombol"&gt;Klik 2&lt;/button&gt;
+&lt;div id="logo-utama"&gt;MY BRAND&lt;/div&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Karakter Selector (+ Pengenalan "Div"):</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><code>&lt;div&gt;</code>: Sangat Penting! (Pendek dari <em>Division</em>). Tag HTML transparan
+                        alias tanpa bentuk/gaya bawaan apapun. Ibarat laci laci kosong di lemari Anda. Tugas khususnya
+                        HANYA SEBAGAI wadah kerangka / blok pembungkus tata letak (Layout).</li>
+                    <li><code>.tombol</code>: Penggunaan titik (<code>.</code>) dalam CSS menandakan pembuatan
+                        <strong>Class</strong>. Stempel yang didesain untuk ditempelkan secara massal (berkali-kali).
+                    </li>
+                    <li><code>#logo-utama</code>: Penggunaan pagar (<code>#</code>) adalah <strong>ID</strong>. Desain
+                        kritis eksklusif satu-satunya di halaman itu dan pantang diduplikat.</li>
+                </ul>
+            </div>
+
+            <div class="quest-box" style="margin-top: 15px;">
+                <span class="quest-level">✏️ LATIHAN MINI 1: Menguasai Selector</span>
+                <p><strong>Quest:</strong> Buka editor text Anda. Buat 3 tag paragraf HTML. Buat 1 class CSS
+                    <code>.sorot-merah</code> (berikan warna merah). Terapkan class tersebut HANYA pada paragraf ke-1
+                    dan ke-3 saja dengan menyematkan <code>class="sorot-merah"</code> di elemen terkait!
+                </p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Box Model: Margin, Border, & Padding</h3>
+            <p>Dalam web-design modern, setiap elemen wajib diperlakukan persis layaknya "Kotak" (Box Model).</p>
+            <ul>
+                <li><strong>Padding (Ruang Dalam):</strong> Jarak antara isi teks/konten menuju batas garis kotaknya
+                    (Border).</li>
+                <li><strong>Border:</strong> Garis batas fisik (Tepi) dari kotak tersebut.</li>
+                <li><strong>Margin (Ruang Luar):</strong> Jarak saling dorong / jarak spasi ANTAR elemen satu dengan
+                    elemen lainnya.</li>
+            </ul>
+
+            <h4>💻 Contoh Kode 1: Senggolan Margin vs Padding Luas</h4>
+            <pre><code>&lt;style&gt;
+  .kotak-pesan {
+    background-color: lightgray;
+    padding: 20px; /* Jarak teks ke sisi/tepi box jadi luas */
+    margin: 30px;  /* Box ini mendorong semua elemen di sekelilingnya sejauh 30px */
+    border: 2px solid black; /* Garis pembatas kotak */
+  }
+&lt;/style&gt;
+&lt;div class="kotak-pesan"&gt;Bebas sesak! Saya punya ruang napas dalam kotak ini!&lt;/div&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Kode Jaga Jarak:</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><code>padding: 20px;</code>: Mengetuk palu ruang gerak di dalam! Teks tulisan yang bersandar di
+                        pinggir TEMBOK Kotak kini dijauhkan renggang 20 pixel (Mencegah nuansa sesak/sempit).</li>
+                    <li><code>margin: 30px;</code>: Menguasai radius wilayah sekeliling elemen! Bagian luaran kotak ini
+                        akan otomatis menendang menolak semua bentuk elemen tetangganya yang coba mendekat sejauh 30
+                        pixel.</li>
+                    <li><code>border: 2px solid black;</code>: Membangun pagar fisik fisik sesungguhnya. Berupa garis
+                        arsitektur tegas berkelir hitam setebal 2 pixel.</li>
+                </ul>
+            </div>
+
+            <div
+                style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 12px; border: 1px dashed var(--accent-purple);">
+                <strong>🐛 Potensi Bug Dimensi Box Model:</strong> Menambahkan ukuran Padding sering kali "ikut
+                menghitung" dan membuat ukuran lebar/tinggi utuh kotak malah membengkak liar melebihi ekspektasi
+                Anda!<br>
+                <strong>🚀 Solusi Clean Code:</strong> Suntikkan kode peretas reset
+                <code>* { box-sizing: border-box; }</code> di barisan paling atas CSS Anda, agar Padding mengalah ke
+                dalam dan tidak merusak susunan ukuran pasti kotak.
+            </div>
+
+            <div class="quest-box" style="margin-top: 15px;">
+                <span class="quest-level">✏️ LATIHAN MINI 2: Konstruktor Box Profil</span>
+                <p><strong>Quest:</strong> Buat file HTML baru. Buat div dengan <code>class="profil"</code>. Berikan CSS
+                    berupa: ukuran lebar mutlak <code>width: 200px</code>, Tinggi <code>height: 200px</code>, warna
+                    latar abu cerah, lalu berikan <code>padding: 30px</code>. Uji coba dengan dan tanpa
+                    <code>box-sizing: border-box</code> untuk merasakan efek ledakannya pada layout Anda!
+                </p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Meratakan Layout Menggunakan Flexbox Sempurna</h3>
+            <p>Flexbox adalah sihir tata letak modern. Mengakhiri penderitaan susunan elemen yang selalu menumpuk kaku
+                ke bawah, Flexbox membariskan anak-anaknya secara elegan sejajar (secara sentral atau menyebar rata).
+            </p>
+
+            <h4>💻 Contoh Kode 1: Kekuatan Sentralisasi Vertikal & Horizontal</h4>
+            <pre><code>&lt;style&gt;
+  .wadah-tengah {
+    display: flex; /* Aktifkan sihir kotak fleksibel pada Induk */
+    justify-content: center; /* Rata mendatar sempurna */
+    align-items: center; /* Rata vertikal (Tengah secara tinggi) sempurna! */
+    height: 150px; /* Induk Butuh tinggi, jika meratakan secara vertikal */
+    background-color: #eeddff;
+  }
+&lt;/style&gt;
+&lt;div class="wadah-tengah"&gt;Saya mengapung tepat persis di tengah kotak ini!&lt;/div&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Keajaiban Sihir 'Flex':</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><code>display: flex;</code>: adalah sistem tata letak (layout) yang membuat sebuah elemen
+                        (wadah) menjadi fleksibel, sehingga Anda bisa dengan sangat mudah mengatur posisi, penyelarasan,
+                        dan jarak elemen-elemen di dalamnya.</li>
+                    <li><code>justify-content: center;</code>: (Titik Berat Horizontal / Mendatar). Memikat dan menyeret
+                        gerombolan anak pas di sumbu X Tengah.</li>
+                    <li><code>align-items: center;</code>: (Titik Berat Vertikal / Tegak Lurus). Menarik gerombolan pas
+                        presisi ke di tengah sumbu Y. <em>(Catatan: Hukum align-items ini hampa khasiat bila tinggi
+                            induk/wadah tidak didefinisikan pakai <code>height</code>!)</em></li>
+                </ul>
+            </div>
+
+            <h4>💻 Contoh Kode 2: Navbar Membelah (Kiri & Kanan Terpisah)</h4>
+            <pre><code>&lt;style&gt;
+  .navbar-ajaib {
+    display: flex;
+    justify-content: space-between; /* Induk melempar satu sisi mentok ke kiri, satu ke kanan */
+    padding: 15px;
+    background-color: #333; color: white;
+  }
+&lt;/style&gt;
+&lt;div class="navbar-ajaib"&gt;
+  &lt;h3&gt;LOGO STARTUP&lt;/h3&gt;
+  &lt;div&gt;Menu | Fitur Utama | Login&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Taktik Navbar Belah Lautan (Space-Between):</strong>
+                <p style="margin-top: 5px;">Mungkin teknik sakti properti CSS yang akan 100% Anda gunakan dalam merakit
+                    gerbang atas/Navbar aplikasi: <code>justify-content: space-between;</code>. Menolak untuk merapat
+                    bertumpuk, kemampuan pamungkas Flexbox ini membanting elemen ke-1 bersandar menyendiri mentok di
+                    pojok ujung Kiri Layar, dan menyeret sisa elemen lainnya berkumpul tertahan di sudut Kanan ujung
+                    layar!</p>
+            </div>
+
+            <div class="quest-box" style="margin-top: 15px;">
+                <span class="quest-level">✏️ LATIHAN MINI 3: Layout Artikel 2 Kolom</span>
+                <p><strong>Quest:</strong> Jejerkan halaman blog Anda secara belah pinggir! Buat wadah induk dengan
+                    <code>display: flex</code>. Taruh dua anak div di dalamnya: Anak Kiri yang diatur CSS
+                    <code>width: 70%</code> (Berisi Teks panjang), dan Anak Kanan <code>width: 30%</code> (Menyimpan
+                    menu Sidebar).
+                </p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Mendominasi Visual: File Gambar Lokal & Background CSS</h3>
+            <p>Selain URL web (seperti contoh sebelumnya), Anda mutlak wajib menggunakan file gambar asli dari folder
+                Anda sendiri jika sedang memajang Logo atau Icon perusahaan agar tidak tergantung koneksi WiFi saat
+                *offline*.</p>
+
+            <h4>💻 Contoh Kode 1: Tag Elemen Gambar File Lokal (Local Assets)</h4>
+            <pre><code>&lt;!-- Tag img tidak punya penutup. Jika file gambar beda folder, tulis petunjuk arahnya (misal: bg/logo.png)! --&gt;
+&lt;img src="logo_asli.png" alt="Logo Startup" class="foto-bundar"&gt;
+
+&lt;style&gt;
+  .foto-bundar {
+    width: 150px; /* Kotak paksa agar proporsional */
+    height: 150px;
+    object-fit: contain; /* Contain: mencegah gambar terpotong seperti logo! Pakai Cover jika ingin full edge */
+    border-radius: 50%; /* Memutar logo kotak menjadi bulat sempurna */
+    border: 3px solid white;
+  }
+&lt;/style&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Anatomi Elemen Gambar & Pembulatan Sudut:</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><code>&lt;img src="..." alt="..."&gt;</code>: alt ini adalah teks pengganti yang muncul jika
+                        gambar gagal dimuat.
+                    </li>
+                    <li><code>object-fit: cover;</code>: Mencegah gambar berontak karena dipaksa melar gepeng
+                        *stretching*. Gambar dipastikan memotong / sembunyi secara elegan ke belakang bingkai kotak demi
+                        mengamankan harga diri rasionya *aspect-ratio*.</li>
+                    <li><code>border-radius: 50%;</code>: Pemahat ujung kotak paling manjur sejauh ini! Melelehkan
+                        keempat pinggiran kotak selebar 50% hingga mekar menjadi pilar <strong>Bulat Lingkaran Total
+                            Sejati</strong>.</li>
+                </ul>
+            </div>
+
+            <h4>💻 Contoh Kode 2: Latar Belakang Epik (CSS Background)</h4>
+            <pre><code>&lt;style&gt;
+  .header-landing-page {
+    width: 100%;
+    height: 400px;
+    
+    /* Memanggil lukisan grafis dan meriasnya merata di dinding latar! */
+    background-image: url('https://picsum.photos/1000/400');
+    background-size: cover; /* Gambar me-resize proporsional mentok hingga sudut kotak */
+    background-position: center; /* Titik fokus gambar adalah centernya */
+    color: white; 
+    
+    /* Kombinasi Flexbox memposisikan teks Judul ke tengah */
+    display: flex; justify-content: center; align-items: center; 
+  }
+&lt;/style&gt;
+
+&lt;div class="header-landing-page"&gt;
+  &lt;h1 style="text-shadow: 2px 2px 5px black;"&gt;Selamat Datang di Portofolio Megahku!&lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+
+            <div
+                style="background-color: #f8f9fa; border-left: 4px solid var(--primary); padding: 10px 15px; margin-bottom: 20px; margin-top: 15px;">
+                <strong>🔍 Bedah Kode Latar Belakang Dinding Mural:</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><code>background-image: url('...');</code>: Memanggil dan menyerap grafis untuk mendasar /
+                        menempel di lantai kotak (menjadi latar) bukan tampil sebagai obyek solid murni, sehingga di
+                        atasnya masih bisa dijejali elemen ketikan tulisan dengan merdeka terbang!</li>
+                    <li><code>background-size: cover;</code>: Memaksa gambar pemandangan untuk ditarik atau dipres demi
+                        memenuhi seluruh ruang kosong di dinding batas elemen sekeras apapun takdir kotak
+                        <code>&lt;div&gt;</code> membatasi tinggi dan lebarnya.
+                    </li>
+                    <li><code>text-shadow: ...</code>: Trik muslihat UI Profesional! Menyisipkan gumpalan bayangan redup
+                        hitam pada huruf teks cemerlang, memastikan tulisan tetap memancarkan keterbacaan tinggi saat
+                        latar gambarnya sedang silau warna keputihan terang sekalipun.</li>
+                </ul>
+            </div>
+
+            <div
+                style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 12px; border: 1px dashed #ccc; color: black;">
+                <strong>💡 Tip URL / Path Asli (Lokal):</strong><br>
+                Jika file `html` Anda sejajar berdampingan dengan gambar foto, cukup panggil nama filenya:
+                <code>src="kucing.jpg"</code>. Namun, sangat dianjurkan menyimpan kumpulan gambar di folder mandiri
+                untuk Web Pro! Jadi formatnya: <code>src="images/kucing.jpg"</code>
+            </div>
+            <div
+                style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 12px; border: 1px dashed #ccc; color: black;">
+                <strong>🍌 Nano Banana Tips:</strong> Sebagai UI Designer sejati, tidak ada istilah "Ngoding Macet
+                karena Nunggu Foto!". Gunakan layanan Placeholder keren seperti <code>https://picsum.photos/</code>
+                sebagai pemancing visual *(dummy file)* sementara saat file gambar logo asli masih direvisi!
+            </div>
+        </div>
+
+        <div class="quest-box">
+            <h3>🧩 MEGA QUEST: Ujian CSS Penggabungan (Materi Pert. 1 - 3)</h3>
+            <p>Uji nyali sintaks visual Anda di 5 latihan beruntun ini! Mulai dari Basic HTML Style hingga Box Flexbox
+                CSS!</p>
+
+            <span class="quest-level">LATIHAN 1 - Modifikasi Ekstrem Inline Style</span>
+            <p>Buat file <code>latihan_1.html</code>. Bangun 1 wadah <code>&lt;div&gt;</code> dan 1 elemen <code>&lt;h1&gt;</code>. Gunakan murni <strong>Inline Style CSS</strong>! Berikan `&lt;div&gt;` warna latar gelap (Hitam/Navy) dan penambahan <code>padding: 20px</code>. Lalu rancang H1 di dalamnya merona keemasan (<code>color: gold</code>), tertata <code>text-align: center</code>, dan tegaskan identitas hurufnya dengan <code>font-family: sans-serif</code>.</p>
+
+            <br><span class="quest-level">LATIHAN 2 - Pabrik Tombol (Class Selector)</span>
+            <p>Buat file <code>latihan_2.html</code>. Gunakan <strong>Internal CSS</strong> di Head. Rancanglah sebuah class pahlawan <code>.btn-keren</code> yang menyulap polosnya teks HTML menjadi tombol melengkung visual canggih. Atur spesifikasinya: Beri warna latar biru terang, warna teks putih murni, <code>padding: 10px 20px</code> (mendapat tinggi & lebar presisi), buang garis standar dengan <code>border: none</code>, lalu puncaknya dengan efek <code>border-radius: 8px</code>. Sesudah itu, ciptakan 3 buah <code>&lt;button&gt;</code> dan kenakan seragam `.btn-keren` ini pada kesemuanya!</p>
+
+            <br><span class="quest-level">LATIHAN 3 - Kalkulasi Presisi Box Model</span>
+            <p>Buat file <code>latihan_3.html</code>. Jangan lupakan ritual anti-bug <code>* { box-sizing: border-box; }</code>! Konstruksi dua buah wadah <code>&lt;div&gt;</code> sejajar atas bawah bernuansa warna abu-abu. Spesifikasi wajib: Besaran <code>width: 300px</code>, rongga dalam <code>padding: 25px</code> (agar isi teks tak gerah), ketebalan cangkang baja <code>border: 3px solid #333</code>, serta lindungi mereka dari pergesekan tabrak antar elemen satu sama lain menggunakan <code>margin-bottom: 25px</code>.</p>
+
+            <br><span class="quest-level">LATIHAN 4 - Arsitektur Header Canggih (Flexbox)</span>
+            <p>Buat file <code>latihan_4.html</code>. Waktunya melukis jembatan utama web. Ubah <code>&lt;nav&gt;</code> sebagai induk dan taburkan <code>display: flex;</code> secara mutlak bersama taktik pembelah dimensi sekuat <code>justify-content: space-between;</code> agar barisan membelah, juga meratakan presisi di titik pussat tengah sumbu tinggi bermodalkan <code>align-items: center;</code>.<br>Di Sisi Kiri: Tanam Teks Logo Tepercaya bersinar tebal. <br>Di Sisi Kanan: Bikin wadah Menu-Anak <code>&lt;div&gt;</code> yang *juga* beraliran fleksibel `display: flex` berlapis <code>gap: 20px</code> murni tanpa *padding* meribetkan demi meratakan ritme 3 serangkai tautan navigasi ("Home", "About", "Contact").</p>
+
+            <br><span class="quest-level" style="color: var(--accent-orange);">🏆 LATIHAN 5 (FINAL BOSS) - Desain Kartu Produk E-Commerce</span>
+            <p>Buat file <code>latihan_5.html</code>. Mari racik kombo komando CSS terlengkap menuju fase final! Buat sebuah wadah absolut "Product Card" tegak lurus melukisa putih elegan bersiku halus (<code>border-radius: 12px</code>). Sematkan sihir gradasi gelap bayangan (<code>box-shadow</code>) agar Kartunya tervisualisasi melayang mengangkasa.<br>Di kap mesin paling puncak: Baringkan tag <code>&lt;img&gt;</code> produk menggiurkan (manfaatkan sihir *Dummy* <em>Picsum</em>) menembus ketinggian 200px sambil tetap di-"potong-cegah-gepeng" berkat ketajaman siasat <code>object-fit: cover</code>. <br>Di lantai dasarnya: Tumbuhkan ruang <code>padding</code> lega, tulis Judul Produk melintang Tebal Hitam, bubuhkan cap Harga bertinta Oranye tebal ala antarmuka toko *Marketplace*, dan terakhir letupkan "Tombol Beli" di pucuk terdepan kartu itu percis pinjaman taktik dari Latihan Klasik Ke-2 Anda!</p>
+
+            <div
+                style="background-color: var(--accent-purple); color: white; padding: 12px; border-radius: 6px; margin-top: 18px;">
+                <strong>🔑 Kunci Validasi Mentoring:</strong> Tersesat atau sekadar ingin validasi arsitektur syntax
+                Anda? Struktur dan *best-practices* jawaban instruktur tersedia aman di brankas direktori
+                <code>kunci_jawaban/pertemuan_3/latihan_1.html</code> (Terlengkap dari nomer 1 hingga 5)!
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_2.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">⬅️
+                Kembali (Pertemuan 2)</a>
+            <a href="pertemuan_4.html"
+                style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut
+                Belajar Javascript (Pertemuan 4) ➡️</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+
+</html>

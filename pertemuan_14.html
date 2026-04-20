@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 14 - Ujian 2 Pendataan Siswa Sederhana</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase Ujian Output</span>
+            <h2>Pertemuan 14: Ujian 2 - Pendataan Siswa Sederhana (Tanpa Database)</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Siswa membuat aplikasi pendataan siswa tanpa MySQL, fokus pada logika proses data, validasi, dan tampilan yang tetap rapi.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Ujian</h3>
+            <ul>
+                <li>Siswa memahami alur CRUD sederhana tanpa database.</li>
+                <li>Siswa bisa menyimpan data menggunakan session, JSON, atau file.</li>
+                <li>Siswa tetap menerapkan UI terstruktur dengan header, form, tabel, dan tombol aksi.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Requirement Wajib</h3>
+            <ol>
+                <li>Form tambah data siswa minimal: nama, kelas, jurusan, email.</li>
+                <li>Data yang ditambah langsung muncul pada tabel daftar siswa.</li>
+                <li>Ada tombol hapus data.</li>
+                <li>Ada validasi input minimal nama tidak boleh kosong.</li>
+                <li>Header menu tersedia: Beranda, Data Siswa, Kontak.</li>
+                <li>Terdapat tombol aksi jelas: Simpan, Kembali, Hapus.</li>
+            </ol>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Opsi Teknik Penyimpanan</h3>
+            <ul>
+                <li><strong>Session:</strong> cepat untuk simulasi di kelas.</li>
+                <li><strong>JSON file:</strong> cocok untuk melihat data tersimpan antar reload.</li>
+                <li><strong>Text file (CSV):</strong> alternatif paling sederhana.</li>
+            </ul>
+            <p><strong>Rekomendasi kelas:</strong> gunakan session untuk waktu ujian yang terbatas.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Struktur File yang Disarankan</h3>
+            <pre><code>pendataan_siswa_sederhana/
+├── index.php
+├── tambah.php
+├── hapus.php
+├── kontak.php
+├── header.php
+├── style.css
+└── script.js</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Jadwal Pelaksanaan Ujian</h3>
+            <ol>
+                <li><strong>13.00 - 15.00:</strong> waktu pengerjaan utama project.</li>
+                <li><strong>15.30 - 17.00:</strong> sesi review, revisi, dan perbaikan kode.</li>
+            </ol>
+            <p><strong>Alokasi kerja saat 13.00 - 15.00:</strong> buat struktur file, form tambah, tampil data, tombol hapus, dan validasi dasar.</p>
+            <p><strong>Alokasi kerja saat 15.30 - 17.00:</strong> cek bug, rapikan UI, uji tombol aksi, dan pastikan alur demo lancar.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Contoh Alur Session Singkat</h3>
+            <pre><code>&lt;?php
+session_start();
+
+if (!isset($_SESSION['data_siswa'])) {
+    $_SESSION['data_siswa'] = [];
+}
+
+if (isset($_POST['simpan'])) {
+    $nama = trim($_POST['nama'] ?? '');
+
+    if ($nama !== '') {
+        $_SESSION['data_siswa'][] = [
+            'nama' => $_POST['nama'],
+            'kelas' => $_POST['kelas'],
+            'jurusan' => $_POST['jurusan'],
+            'email' => $_POST['email']
+        ];
+    }
+
+    header('Location: index.php');
+    exit;
+}
+?&gt;</code></pre>
+            <p><strong>Catatan:</strong> ini hanya contoh inti logika, siswa tetap wajib melengkapi tampilan HTML dan tombol aksi.</p>
+        </div>
+
+        <div class="quest-box">
+            <h3>G. Rubrik Penilaian</h3>
+            <span class="quest-level">TOTAL 100 POIN</span>
+            <ul>
+                <li>Input dan simpan data (30 poin)</li>
+                <li>Tampil data dan aksi hapus (30 poin)</li>
+                <li>Validasi dan handling input kosong (15 poin)</li>
+                <li>Header, navigasi, dan tombol aksi (15 poin)</li>
+                <li>Kerapian kode dan struktur file (10 poin)</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>H. Checklist Sebelum Dinilai</h3>
+            <ul>
+                <li>Tombol Simpan menyimpan data dengan benar.</li>
+                <li>Tombol Hapus benar-benar menghapus data yang dipilih.</li>
+                <li>Tombol Kembali mengarah ke halaman yang sesuai.</li>
+                <li>Header tampil di semua halaman utama.</li>
+                <li>Tidak ada warning/error fatal saat demo.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>I. Format Pengumpulan</h3>
+            <ol>
+                <li>Nama folder: <code>ujian14_nama_kelas</code>.</li>
+                <li>File utama: <code>index.php</code>.</li>
+                <li>Demo 3 menit: tambah data, lihat data, hapus data.</li>
+            </ol>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_13.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 13)</a>
+            <a href="pertemuan_15.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut Ujian 3 (Pertemuan 15)</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

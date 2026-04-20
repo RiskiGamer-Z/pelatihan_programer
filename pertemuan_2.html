@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 2 - HTML Lanjutan & Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 1: Front-End UI</span>
+            <h2>Pertemuan 2: HTML Lanjutan, Tabel Kompleks & Form Modern</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Memahami trik menggabungkan sel kolom (Merge) layaknya Excel dan menerapkan kolom isian HTML5 berskala Industri.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Struktur Tabel Klasik</h3>
+            <p>Tabel berperan penting untuk menampilkan kelompok data agar rapi (Sangat terlarang memakai tabel sekadar untuk *Layout* web, gunakan div!). <br>Kombinasi dasar tag yang wajib diketahui:</p>
+            <ul>
+                <li><code>&lt;table border="1"&gt;</code>: Mendeklarasikan tabel.</li>
+                <li><code>&lt;tr&gt;</code> (Table Row): Membuat baris tabel (Mendatar/Garis Horizontal).</li>
+                <li><code>&lt;th&gt;</code> (Table Header): Baris judul untuk tabel (Tebal otomatis).</li>
+                <li><code>&lt;td&gt;</code> (Table Data): Sel pengisi data yang ada di dalam baris tersebut.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Tabel Lanjutan: Colspan & Rowspan (Merge Cell)</h3>
+            <p>Di dunia industri (*Dashboard Admin*), kita sering membongkar kepala tabel agar posisinya dinamis. Ini dikenal dengan istilah "Colspan" dan "Rowspan".</p>
+            <ul>
+                <li><strong>Colspan (Column Span):</strong> Menggabungkan sel tabel secara <strong>Mendatar ke Kanan</strong> (memakan jatah ruang sel kolom di sebelahnya).</li>
+                <li><strong>Rowspan (Row Span):</strong> Menggabungkan sel secara <strong>Menurun ke Bawah</strong> (menyebabkan elemen `<td/th>` di baris sel HTML kedua Anda *tereduksi*).</li>
+            </ul>
+            
+            <h4>💻 Contoh Kode Tabel (Live Example):</h4>
+<pre><code>&lt;table border="1"&gt;
+  &lt;tr&gt;
+    &lt;th rowspan="2"&gt;No&lt;/th&gt;
+    &lt;th rowspan="2"&gt;Nama Pendaftar&lt;/th&gt;
+    &lt;th colspan="2"&gt;Nilai Ujian&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Logika&lt;/th&gt;
+    &lt;th&gt;Desain&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;1&lt;/td&gt;
+    &lt;td&gt;Joko Susilo&lt;/td&gt;
+    &lt;td&gt;90&lt;/td&gt;
+    &lt;td&gt;85&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+            <p><em>Perhatikan bagaimana baris ke-2 <code>&lt;tr&gt;</code> hanya memiliki 2 anak <code>&lt;th&gt;</code>, karena jatah di sisi kiri sudah dipenuhi oleh Rowspan milik NO dan NAMA!</em></p>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Komponen & Anatomi Form HTML5</h3>
+            <p>Formulir (Form) adalah cara Website menerima teks atau pilihan dari Pengguna. Sebelum mengenal tipe canggihnya, pahami Anatomi Wajib penyusun Form:</p>
+            <ul>
+                <li><strong><code>&lt;form&gt;</code></strong>: Kerangka induk absolut. Segala isian pengguna harus berada bertumpuk di dalam tag ini agar datanya bisa dikirim.</li>
+                <li><strong><code>&lt;input&gt;</code> &amp; <code>type="..."</code></strong>: Bidang kosong tempat pengguna mengetik/memilih. Atribut <code>type</code> lah yang menentukan *wujud fisik*-nya (Apakah ia berubah jadi teks biasa, berubah jadi peluru bulat, atau kotak centang).</li>
+                <li><strong><code>&lt;label for="..."&gt;</code> &amp; <code>&lt;input id="..."&gt;</code></strong>: Tag <code>label</code> adalah teks panduan untuk Input tersebut. Rumus Penting: Anda <strong>Wajib</strong> menyamakan isi <code>for</code> di Label dengan isi <code>id</code> di Input. Jika tersambung, ini akan menciptakan keajaiban: <em>Ketika pengguna mengklik teks panduan Labelnya, kursor akan otomatis melompat masuk ke dalam Kotak Input!</em> Sangat krusial demi kemudahan pengguna HP!</li>
+            </ul>
+
+            <p style="margin-top:20px;">Form berevolusi masif di HTML5. Kita tak lagi sekadar mengandalkan <code>type="text"</code> konvensional. Menggunakan tipe yang spesifik dapat memicu memunculkan Keyboard Khusus di HP sentuh (Mobile) sehingga sangat memanjakan pengguna!</p>
+            
+            <h4>Kamus Atribut Tipe Lanjutan:</h4>
+            <ul>
+                <li><code>type="email"</code>: Validasi format surel langsung terpasang.</li>
+                <li><code>type="tel"</code>: Sering dipakai di HP untuk memanggil *Num-Pad*.</li>
+                <li><code>type="date"</code>: Memanggil Kalender *Native* milik peramban web.</li>
+                <li><code>type="range"</code>: Bentukan *Slider* rentang angka seperti pengatur volume.</li>
+                <li><code>&lt;select&gt; &amp; &lt;option&gt;</code>: Bukan atribut dari input, melainkan Tag tersendiri untuk membuat Dropdown Combo-box.</li>
+                <li><code>type="checkbox"</code>: Tag Input berbentuk kotak centang yang biasa dipakai untuk halaman persetujuan (Bisa pilih lebih dari satu).</li>
+                <li><code>type="radio"</code>: Saudara dari checkbox, berbentuk bulat (Hanya boleh memilih satu opsi mutlak, misal Jenis Kelamin).</li>
+                <li><code>type="password"</code>: Mengubah ketikan menjadi bintang atau titik tebal.</li>
+                <li><code>type="file"</code>: Membuat tombol untuk mengunggah berkas foto/dokumen.</li>
+                <li><code>type="submit"</code>: <strong>TOMBOL PAMUNGKAS</strong>. Digunakan di akhir form untuk menembakkan seluruh data tersebut ke server!</li>
+            </ul>
+
+            <h4 style="margin-top:24px;">Atribut Pelengkap Wajib pada Input:</h4>
+            <p>Selain <code>type</code>, Anda akan kerap menempelkan atribut penting berikut pada tag <code>&lt;input&gt;</code> Anda:</p>
+            <ul>
+                <li><strong><code>name="..."</code></strong>: Atribut SUPER PENTING. Berfungsi sebagai laci nama variabel. Jika Anda tidak menuliskan `name`, maka server PHP Anda tidak akan pernah bisa menerima data ketikannya!</li>
+                <li><strong><code>id="..."</code> &amp; <code>for="..."</code></strong>: Kode `id` adalah pengenal unik elemen. Kode `for` dipasang di bungkus `<label>` yang merujuk ke tulisan `id` tersebut, sehingga label dapat diklik untuk melompat memegang panah ke kotak *input*-nya.</li>
+                <li><strong><code>placeholder="..."</code></strong>: Teks bantuan pudar/transparan pelengkap yang otomatis hilang saat pengguna mulai mengetik.</li>
+                <li><strong><code>value="..."</code></strong>: Untuk menyetel teks bawaan langsung dari pabrik pada kotak formulir.</li>
+                <li><strong><code>required</code></strong>: Atribut penegak hukum. Jika dipasang, Browser akan memarahi pemakai secara otomatis dengan tulisan wibawa *"Mohon isi bidang ini"* jika form dibiarkan kosong sewaktu mencet Submit.</li>
+            </ul>
+            <div class="alert alert-info">
+                <strong>Label is Mandatory!</strong> Form modern tak boleh mengandalkan `placeholder="..."` semata. Harus dibungkus dengan <code>&lt;label for="id_input"&gt;</code> agar pembaca layar untuk tunanetra (Accessibility) bisa memahaminya.
+            </div>
+            
+            <h4>💻 Contoh Kode Form (Live Example):</h4>
+<pre><code>&lt;form action="proses.php" method="POST"&gt;
+  &lt;label for="email"&gt;Surel Anda:&lt;/label&gt;
+  &lt;input type="email" id="email" name="user_email" required autocomplete="email"&gt; &lt;br&gt;&lt;br&gt;
+  
+  &lt;label for="tlp"&gt;Kontak HP:&lt;/label&gt;
+  &lt;input type="tel" id="tlp" name="user_tel" required&gt; &lt;br&gt;&lt;br&gt;
+
+  &lt;label for="lahir"&gt;Tanggal Lahir:&lt;/label&gt;
+  &lt;input type="date" id="lahir" name="user_tgl"&gt; &lt;br&gt;&lt;br&gt;
+
+  &lt;label for="paket"&gt;Paket Kursus:&lt;/label&gt;
+  &lt;select id="paket" name="user_paket"&gt;
+    &lt;option value="pagi"&gt;Kelas Pagi&lt;/option&gt;
+    &lt;option value="malam"&gt;Kelas Malam&lt;/option&gt;
+  &lt;/select&gt; &lt;br&gt;&lt;br&gt;
+
+  &lt;input type="checkbox" id="promo" name="user_promo"&gt;
+  &lt;label for="promo"&gt;Kirimkan saya diskon promo bulanan&lt;/label&gt; &lt;br&gt;&lt;br&gt;
+  
+  &lt;input type="submit" value="Daftar Sekarang!"&gt;
+&lt;/form&gt;</code></pre>
+
+            <div style="background-color: var(--card-bg); padding: 16px; border-left: 4px solid var(--primary); margin-top: 10px;">
+                <h4 style="margin-top: 0;">Bedah Kode Form di Atas:</h4>
+                <ul style="margin-bottom: 0;">
+                    <li><strong><code>&lt;form action="proses.php" method="POST"&gt;</code></strong>: Membuka wadah formulir. <code>action</code> menentukan ke file mana data akan dikirim (nanti dipelajari di Pertemuan 5). <code>method="POST"</code> memastikan data terkirim secara gaib/rahasia agar tak terlihat di URL Web.</li>
+                    <li><strong><code>name="..."</code></strong>: Ini adalah <em>nyawa</em> dari form! Atribut <code>name</code> berfungsi sebagai nama variabel agar server (PHP) mengenali laci data mana yang sedang Anda kirim.</li>
+                    <li><strong><code>&lt;label for="tlp"&gt;</code> &amp; <code>&lt;input id="tlp"&gt;</code></strong>: Menghubungkan label teks dengan kotaknya. Jika teks "Kontak HP" disentuh/diklik, kursor pengetikan akan otomatis melompat masuk ke dalam kotak Input! Sangat ajaib dan bagus untuk pengguna HP layar kecil.</li>
+                    <li><strong><code>required</code></strong>: Atribut pengunci modern. Bila form ini kosong, peramban (Chrome/Firefox) akan menolak proses <em>Submit</em>.</li>
+                    <li><strong><code>&lt;select&gt;</code> &amp; <code>&lt;option&gt;</code></strong>: Menggantikan fungsi kotak ketik menjadi menu jatuhan (<em>dropdown</em>) paten, tujuannya agar pengguna tidak memalsukan ejaan isian paket malam atau pagi.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quest-box">
+            <h3>🧩 Latihan & Problem Solving (Porsi 4 Quest)</h3>
+            
+            <span class="quest-level">LATIHAN 1 (DASAR) - Tabel Absensi Biasa</span>
+            <p>Buat dokumen HTML baru berjudul `latihan_1.html`. Buat tabel absensi murni sebanyak 3 Kolom (No, Nama, Status) dan isikan 2 baris data siswa manual di bawahnya.</p>
+            
+            <br><span class="quest-level">LATIHAN 2 (MENENGAH) - Form Pendaftaran Khusus</span>
+            <p>Buat `latihan_2.html`. Jangan gunakan tipe text konvensional. Buat form lamaran kerja yang secara wajib (`required`) menampilkan input: Email Akun, Tanggal Lahir (Pakai kalender pop-up native), dan Range Ekspektasi Gaji.</p>
+            
+            <br><span class="quest-level">LATIHAN 3 (LANJUTAN) - Modifikasi Tabel Rekap Laporan Bulanan</span>
+            <p>Buat file `latihan_3.html`. Tantangannya: Menggabungkan `colspan` dan `rowspan` secara bersamaan.</p>
+            <ul>
+                <li>Anda harus memiliki satu Header "NAMA" yang panjangnya dua baris ke bawah (`rowspan=2`).</li>
+                <li>Di sebelahnya ada tulisan "RINCIAN PEMBAYARAN" yang lebarnya `colspan=3` untuk menaungi (Januari, Februari, Maret) di bawahnya!</li>
+            </ul>
+
+            <br><span class="quest-level">LATIHAN 4 (ANALISIS) - Eksplorasi Dropdown & Checkbox Modern</span>
+            <p>Dalam realita pendaftaran, pria/wanita tak diketik lewat text, namun lewat `Combo Box/Select` atau `Radio Button`. </p>
+            <p>Buat `latihan_4.html`, lalu rancang komponen <code>&lt;select&gt;...&lt;option&gt;</code> yang menyuruh peserta memilih "Jurusan BLK". Lalu di bawahnya buat elemen <code>&lt;input type="checkbox"&gt;</code> yang bertuliskan menyetujui S&K (Syarat dan Ketentuan Perusahaan). Gunakan label ber-ID agar saat tulisan syarat ditekan, kotaknya ikut *tercentang otomatis*!</p>
+
+            <br><span class="quest-level">LATIHAN 5 (TUGAS AKHIR TABEL) - Jadwal Pelajaran Kompleks</span>
+            <p>Uji pamungkas khusus Tabel! Buat `latihan_5.html`. Hasilkan sebuah **Tabel Jadwal Piket / Kursus** seminggu penuh. Di tabel ini, Anda harus menggunakan tag semantik <code>&lt;thead&gt;</code> untuk Kepala Tabel dan <code>&lt;tbody&gt;</code> untuk isinya. Anda juga wajib mencontohkan penggabungan sel ganda yang rumit: Misalnya hari 'Sabtu' dan 'Minggu' digabung menjadi satu sel `colspan="2"` dengan tulisan "LIBUR" di tengahnya!</p>
+            
+            <div style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 12px; border: 1px dashed var(--accent-purple);">
+                <strong>💡 Tip Instruktur:</strong> Kebingungan sintaks? Anda senantiasa bisa merujuk ke folder referensi rahasia <code>/kunci_jawaban/pertemuan_2/</code> di dalam lokal server proyek Anda!
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_1.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">⬅️ Kembali (Pertemuan 1)</a>
+            <a href="pertemuan_3.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 3 ➡️</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

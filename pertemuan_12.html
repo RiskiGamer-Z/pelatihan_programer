@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 12 - Penyempurnaan CRUD dengan Header, CSS, dan JS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 3: Database & Integrasi</span>
+            <h2>Pertemuan 12: Penyempurnaan CRUD (Header + CSS + JavaScript)</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Di sesi ini siswa merapikan project CRUD: menambah header aplikasi, memperbaiki tampilan, dan memberi interaksi JavaScript agar aplikasi lebih siap demo.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Target Pertemuan 12</h3>
+            <ul>
+                <li>CRUD tetap berjalan penuh: tambah, tampil, edit, hapus.</li>
+                <li>Halaman memiliki header yang konsisten di semua file.</li>
+                <li>Tampilan dipisah ke style.css agar rapi dan mudah dikembangkan.</li>
+                <li>JavaScript dipakai untuk validasi ringan, konfirmasi aksi, dan pencarian cepat.</li>
+                <li>Struktur file project menjadi lebih profesional.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Struktur Folder Penyempurnaan</h3>
+            <pre><code>pendaftaran_siswa_app/
+├── config.php
+├── header.php
+├── index.php
+├── beranda.php
+├── tambah.php
+├── edit.php
+├── update.php
+├── hapus.php
+├── kontak.php
+├── style.css
+└── script.js</code></pre>
+            <p><strong>Catatan:</strong> semua halaman PHP memanggil style.css dan script.js agar tampilan serta perilaku aplikasi konsisten.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Komponen Header Aplikasi</h3>
+            <p>Contoh kemarin tetap dipakai, tetapi sekarang disarankan dipisah ke file <code>header.php</code> agar tidak menulis ulang kode yang sama:</p>
+            <pre><code>&lt;header class="app-header"&gt;
+    &lt;div class="brand"&gt;
+        &lt;h1&gt;Aplikasi Pendataan Siswa&lt;/h1&gt;
+        &lt;p&gt;CRUD Dasar PHP MySQL&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;nav class="menu"&gt;
+        &lt;a href="beranda.php"&gt;Beranda&lt;/a&gt;
+        &lt;a href="index.php"&gt;Data Siswa&lt;/a&gt;
+        &lt;a href="tambah.php"&gt;Tambah Data&lt;/a&gt;
+        &lt;a href="kontak.php"&gt;Kontak&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+            <p><strong>Manfaat:</strong> siswa belajar bahwa aplikasi web bukan hanya fungsi, tetapi juga konsistensi antarmuka. <strong>Tambahan baru:</strong> menu Beranda dan Kontak serta pemisahan header ke file terpisah.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>D. CSS Dasar Agar CRUD Lebih Rapih</h3>
+            <pre><code>/* style.css */
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #f3f6fb;
+    color: #1f2937;
+}
+
+.app-header {
+    background: linear-gradient(120deg, #1d4ed8, #0ea5e9);
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 12px;
+    font-weight: 600;
+}
+
+.container {
+    max-width: 980px;
+    margin: 24px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+input, button, select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+button, .btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-danger { background: #dc2626; }
+.btn-warning { background: #d97706; }
+
+.table-wrap { overflow-x: auto; }
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px;
+    text-align: left;
+}
+
+.helper {
+    font-size: 0.9rem;
+    color: #475569;
+}</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>E. JavaScript Ringan untuk UX CRUD</h3>
+            <pre><code>// script.js
+// Konfirmasi hapus
+function konfirmasiHapus(nama) {
+    return confirm('Yakin ingin menghapus data ' + nama + '?');
+}
+
+// Validasi form sederhana
+function validasiFormSiswa() {
+    const nama = document.getElementById('nama').value.trim();
+    const kelas = document.getElementById('kelas').value.trim();
+    const jurusan = document.getElementById('jurusan').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (nama.length < 3) {
+        alert('Nama minimal 3 karakter.');
+        return false;
+    }
+
+    if (!email.includes('@')) {
+        alert('Format email belum valid.');
+        return false;
+    }
+
+    if (kelas === '' || jurusan === '') {
+        alert('Kelas dan jurusan wajib diisi.');
+        return false;
+    }
+
+    return true;
+}
+
+// Filter data cepat di index
+function filterData() {
+    const keyword = document.getElementById('cari').value.toLowerCase();
+    const rows = document.querySelectorAll('.baris-siswa');
+
+    rows.forEach(function (row) {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(keyword) ? '' : 'none';
+    });
+}</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Contoh Kemarin (index.php) - Tetap Dipakai</h3>
+            <pre><code>&lt;?php
+require 'config.php';
+$query = mysqli_query($koneksi, "SELECT * FROM calon_siswa ORDER BY id DESC");
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Data Siswa&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header class="app-header"&gt;
+        &lt;div class="brand"&gt;
+            &lt;h1&gt;Aplikasi Pendataan Siswa&lt;/h1&gt;
+            &lt;p&gt;CRUD Dasar PHP MySQL&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;nav class="menu"&gt;
+            &lt;a href="beranda.php"&gt;Beranda&lt;/a&gt;
+            &lt;a href="index.php"&gt;Data Siswa&lt;/a&gt;
+            &lt;a href="tambah.php"&gt;Tambah Data&lt;/a&gt;
+            &lt;a href="kontak.php"&gt;Kontak&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main class="container"&gt;
+        &lt;div class="toolbar"&gt;
+            &lt;input type="text" id="cari" placeholder="Cari nama/kelas/jurusan" onkeyup="filterData()"&gt;
+            &lt;a class="btn" href="tambah.php"&gt;+ Tambah Data&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;div class="table-wrap"&gt;
+            &lt;table class="table"&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;No&lt;/th&gt;
+                    &lt;th&gt;Nama&lt;/th&gt;
+                    &lt;th&gt;Kelas&lt;/th&gt;
+                    &lt;th&gt;Jurusan&lt;/th&gt;
+                    &lt;th&gt;Email&lt;/th&gt;
+                    &lt;th&gt;Aksi&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;?php $no = 1; while ($row = mysqli_fetch_assoc($query)): ?&gt;
+                    &lt;tr class="baris-siswa"&gt;
+                        &lt;td&gt;&lt;?php echo $no++; ?&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;?php echo htmlspecialchars($row['nama']); ?&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;?php echo htmlspecialchars($row['kelas']); ?&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;?php echo htmlspecialchars($row['jurusan']); ?&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;?php echo htmlspecialchars($row['email']); ?&gt;&lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;a class="btn btn-warning" href="edit.php?id=&lt;?php echo $row['id']; ?&gt;"&gt;Edit&lt;/a&gt;
+                            &lt;a class="btn btn-danger" href="hapus.php?id=&lt;?php echo $row['id']; ?&gt;" onclick="return konfirmasiHapus('&lt;?php echo htmlspecialchars($row['nama']); ?&gt;')"&gt;Hapus&lt;/a&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;?php endwhile; ?&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;p class="helper"&gt;Tip: gunakan kolom pencarian untuk simulasi fitur cepat saat presentasi.&lt;/p&gt;
+    &lt;/main&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Keterangan tambahan kode:</strong> dibanding contoh kemarin, pada versi ini menu navigasi sudah ditambah <code>Beranda</code> dan <code>Kontak</code> agar alur aplikasi lebih lengkap.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>G. Contoh Tambahan Baru (Beranda, Tambah Data, Kontak, Tombol Aksi)</h3>
+            <h4>1. header.php</h4>
+            <pre><code>&lt;header class="app-header"&gt;
+    &lt;div class="brand"&gt;
+        &lt;h1&gt;Aplikasi Pendataan Siswa&lt;/h1&gt;
+        &lt;p&gt;CRUD Dasar PHP MySQL&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;nav class="menu"&gt;
+        &lt;a href="beranda.php"&gt;Beranda&lt;/a&gt;
+        &lt;a href="index.php"&gt;Data Siswa&lt;/a&gt;
+        &lt;a href="tambah.php"&gt;Tambah Data&lt;/a&gt;
+        &lt;a href="kontak.php"&gt;Kontak&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+
+            <h4>2. beranda.php (halaman awal)</h4>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Beranda Aplikasi&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;?php include 'header.php'; ?&gt;
+
+    &lt;main class="container"&gt;
+        &lt;h2&gt;Selamat Datang&lt;/h2&gt;
+        &lt;p&gt;Aplikasi ini digunakan untuk mengelola data calon siswa.&lt;/p&gt;
+        &lt;a class="btn" href="index.php"&gt;Lihat Data Siswa&lt;/a&gt;
+        &lt;a class="btn btn-warning" href="tambah.php"&gt;Tambah Data Baru&lt;/a&gt;
+    &lt;/main&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>3. tambah.php (dengan tombol Simpan, Kembali, Reset)</h4>
+            <pre><code>&lt;?php
+require 'config.php';
+
+if (isset($_POST['simpan'])) {
+    $nama = $_POST['nama'];
+    $kelas = $_POST['kelas'];
+    $jurusan = $_POST['jurusan'];
+    $email = $_POST['email'];
+
+    mysqli_query($koneksi, "INSERT INTO calon_siswa (nama, kelas, jurusan, email) VALUES ('$nama', '$kelas', '$jurusan', '$email')");
+    header('Location: index.php?pesan=simpan-berhasil');
+    exit;
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Tambah Data Siswa&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;?php include 'header.php'; ?&gt;
+
+    &lt;main class="container"&gt;
+        &lt;h2&gt;Form Tambah Data Siswa&lt;/h2&gt;
+        &lt;form method="POST" onsubmit="return validasiFormSiswa()"&gt;
+            &lt;input type="text" id="nama" name="nama" placeholder="Nama" required&gt;&lt;br&gt;&lt;br&gt;
+            &lt;input type="text" id="kelas" name="kelas" placeholder="Kelas" required&gt;&lt;br&gt;&lt;br&gt;
+            &lt;input type="text" id="jurusan" name="jurusan" placeholder="Jurusan" required&gt;&lt;br&gt;&lt;br&gt;
+            &lt;input type="email" id="email" name="email" placeholder="Email" required&gt;&lt;br&gt;&lt;br&gt;
+
+            &lt;button type="submit" name="simpan" class="btn"&gt;Simpan&lt;/button&gt;
+            &lt;a href="index.php" class="btn btn-warning"&gt;Kembali&lt;/a&gt;
+            &lt;button type="reset" class="btn btn-danger"&gt;Reset&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/main&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>4. kontak.php (informasi penulis)</h4>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Kontak Penulis&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;?php include 'header.php'; ?&gt;
+
+    &lt;main class="container"&gt;
+        &lt;h2&gt;Informasi Penulis&lt;/h2&gt;
+        &lt;p&gt;Nama: Nama Anda&lt;/p&gt;
+        &lt;p&gt;Email: emailanda@mail.com&lt;/p&gt;
+        &lt;p&gt;Kelas: XI RPL&lt;/p&gt;
+        &lt;a href="beranda.php" class="btn"&gt;Kembali ke Beranda&lt;/a&gt;
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Keterangan tambahan kode:</strong></p>
+            <ul>
+                <li><strong>Tambahan baru 1:</strong> halaman <code>beranda.php</code> sebagai halaman awal aplikasi.</li>
+                <li><strong>Tambahan baru 2:</strong> halaman <code>kontak.php</code> untuk informasi penulis.</li>
+                <li><strong>Tambahan baru 3:</strong> file <code>header.php</code> supaya menu tidak diketik ulang di setiap halaman.</li>
+                <li><strong>Tambahan baru 4:</strong> tombol aksi lengkap: Simpan, Kembali, Reset, dan tombol navigasi ke Beranda.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>H. Checklist Penyempurnaan CRUD</h3>
+            <ul>
+                <li>Header tampil rapi di semua halaman CRUD.</li>
+                <li>style.css terhubung dan mengubah tampilan tabel serta form.</li>
+                <li>script.js aktif untuk validasi form dan konfirmasi hapus.</li>
+                <li>Halaman Beranda dan Kontak sudah bisa diakses dari menu.</li>
+                <li>Tombol Simpan, Kembali, Reset, Edit, Hapus berjalan sesuai fungsi.</li>
+                <li>Pencarian cepat di halaman index berjalan.</li>
+                <li>Edit dan update sudah berhasil tanpa error.</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>I. Latihan Praktik (4 Soal)</h3>
+            <ol>
+                <li><strong>Latihan 1:</strong> Buat file <code>header.php</code> lalu pasang di beranda.php, index.php, tambah.php, dan kontak.php.</li>
+                <li><strong>Latihan 2:</strong> Buat halaman <code>beranda.php</code> dan <code>kontak.php</code> yang terhubung lewat menu header.</li>
+                <li><strong>Latihan 3:</strong> Perbarui <code>tambah.php</code> dengan tombol <strong>Simpan</strong>, <strong>Kembali</strong>, dan <strong>Reset</strong>.</li>
+                <li><strong>Latihan 4:</strong> Pastikan seluruh navigasi dan CRUD berjalan, termasuk tombol Edit/Hapus dan filter data.</li>
+            </ol>
+
+            <p><a href="kunci_jawaban/pertemuan_12/latihan_1_soal.php" target="_blank">📖 Latihan 1 Soal</a> | <a href="kunci_jawaban/pertemuan_12/latihan_1_kunci.php" target="_blank">✅ Kunci 1</a></p>
+            <p><a href="kunci_jawaban/pertemuan_12/latihan_2_soal.php" target="_blank">📖 Latihan 2 Soal</a> | <a href="kunci_jawaban/pertemuan_12/latihan_2_kunci.php" target="_blank">✅ Kunci 2</a></p>
+            <p><a href="kunci_jawaban/pertemuan_12/latihan_3_soal.php" target="_blank">📖 Latihan 3 Soal</a> | <a href="kunci_jawaban/pertemuan_12/latihan_3_kunci.php" target="_blank">✅ Kunci 3</a></p>
+            <p><a href="kunci_jawaban/pertemuan_12/latihan_4_soal.php" target="_blank">📖 Latihan 4 Soal</a> | <a href="kunci_jawaban/pertemuan_12/latihan_4_kunci.php" target="_blank">✅ Kunci 4</a></p>
+        </div>
+
+        <div class="quest-box">
+            <h3>J. Checklist Siap Pertemuan 13</h3>
+            <span class="quest-level">WAJIB TERPENUHI</span>
+            <ul>
+                <li>Project CRUD sudah punya identitas visual lewat header.</li>
+                <li>Semua halaman menggunakan style.css dan script.js.</li>
+                <li>Aksi Edit dan Hapus berjalan aman untuk demo kelas.</li>
+                <li>Siswa siap masuk fase ujian project.</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_11.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 11)</a>
+            <a href="pertemuan_13.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 13</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

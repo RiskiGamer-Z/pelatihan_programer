@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 5 - XAMPP, VS Code, dan PHP Dasar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 2: Backend Logic</span>
+            <h2>Pertemuan 5: Menggunakan XAMPP, VS Code, dan PHP Dasar</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Mulai sekarang siswa belajar membuat web yang berjalan melalui server lokal, bukan hanya tampil di browser. Fokus pertemuan ini adalah menyiapkan alat kerja dan memahami PHP pertama kali.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Apa Itu PHP dan Mengapa Butuh XAMPP?</h3>
+            <p><strong>PHP</strong> adalah bahasa pemrograman server-side yang dipakai untuk memproses data di server sebelum hasilnya dikirim ke browser. PHP sangat cocok untuk membuat login, data form, dashboard, dan website dinamis.</p>
+            <p>Berbeda dengan HTML, CSS, dan JavaScript yang bisa langsung dibuka di browser, file PHP harus dijalankan melalui web server. Karena itu kita memakai <strong>XAMPP</strong> sebagai server lokal di laptop.</p>
+            <ul>
+                <li><strong>Apache</strong> menjalankan website lokal.</li>
+                <li><strong>PHP</strong> memproses kode server-side.</li>
+                <li><strong>MySQL</strong> dipakai untuk menyimpan data pada pertemuan berikutnya.</li>
+                <li><strong>VS Code</strong> dipakai untuk menulis dan mengedit kode.</li>
+            </ul>
+            <div class="alert alert-info">
+                <strong>Inti materi:</strong> VS Code adalah tempat menulis kode, XAMPP adalah tempat menjalankan kode PHP, dan browser adalah tempat melihat hasilnya.
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Persiapan Tools Kerja</h3>
+            <h4>1) Buka VS Code</h4>
+            <ul>
+                <li>Buka folder proyek dari VS Code dengan menu <strong>File → Open Folder</strong>.</li>
+                <li>Gunakan folder di dalam <code>C:\xampp\htdocs\</code>.</li>
+                <li>Contoh nama folder proyek: <code>portofolio-pertama</code>.</li>
+            </ul>
+
+            <h4>2) Jalankan XAMPP</h4>
+            <ul>
+                <li>Buka <strong>XAMPP Control Panel</strong>.</li>
+                <li>Klik <strong>Start</strong> pada <strong>Apache</strong>.</li>
+                <li>Jika belum ada database, MySQL belum perlu dijalankan pada pertemuan ini.</li>
+            </ul>
+
+            <h4>3) Aturan Folder</h4>
+            <p>Semua project PHP harus disimpan di folder <code>C:\xampp\htdocs\</code> supaya bisa diakses melalui alamat localhost.</p>
+            <pre><code>C:\xampp\htdocs\portofolio-pertama\index.php</code></pre>
+            <p>Untuk membukanya di browser, gunakan alamat:</p>
+            <pre><code>http://localhost/portofolio-pertama/</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Struktur Dasar File PHP</h3>
+            <p>File PHP biasanya diawali dengan tag pembuka <code>&lt;?php</code> dan diakhiri tag penutup <code>?&gt;</code>. Di dalamnya kita bisa menulis perintah seperti <code>echo</code>, variabel, kondisi, dan perulangan.</p>
+            <pre><code>&lt;?php
+echo "Halo dari PHP";
+?&gt;</code></pre>
+            <p><strong>Penjelasan:</strong></p>
+            <ul>
+                <li><code>&lt;?php</code> menandai bahwa isi berikutnya adalah kode PHP.</li>
+                <li><code>echo</code> digunakan untuk menampilkan teks ke browser.</li>
+                <li><code>?&gt;</code> menutup blok PHP.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Contoh Kode PHP Pertama</h3>
+            <h4>Contoh 1: Menampilkan teks</h4>
+            <pre><code>&lt;?php
+echo "Selamat datang di pertemuan 5";
+?&gt;</code></pre>
+            <ul>
+                <li><code>echo</code> mencetak teks langsung ke halaman.</li>
+                <li>Tanda petik dipakai karena isi yang ditampilkan adalah string.</li>
+            </ul>
+
+            <h4>Contoh 2: Variabel dan gabung teks</h4>
+            <pre><code>&lt;?php
+$nama = "Rani";
+$kelas = "XI RPL";
+
+echo "Nama saya " . $nama . " dan saya kelas " . $kelas;
+?&gt;</code></pre>
+            <ul>
+                <li>Tanda <code>$</code> dipakai untuk membuat variabel.</li>
+                <li><code>string</code> adalah data teks.</li>
+                <li>Titik <code>.</code> dipakai untuk menggabungkan teks di PHP.</li>
+            </ul>
+
+            <h4>Contoh 3: Perhitungan sederhana</h4>
+            <pre><code>&lt;?php
+$a = 5;
+$b = 10;
+$hasil = $a + $b;
+
+echo "Hasil penjumlahan = " . $hasil;
+?&gt;</code></pre>
+            <ul>
+                <li><code>$a</code> dan <code>$b</code> menyimpan angka.</li>
+                <li><code>+</code> digunakan untuk penjumlahan.</li>
+                <li>Hasil disimpan ke variabel <code>$hasil</code>.</li>
+            </ul>
+        </div>
+
+        <div class="quest-box">
+            <h3>E. Soal Latihan Koding + Kunci Jawaban</h3>
+            <p>Kerjakan latihan berurutan. Buka setiap file di browser melalui <code>http://localhost/kunci_jawaban/pertemuan_5/latihan_*.php</code>. Atau download file lalu jalankan di komputer masing-masing.</p>
+
+            <span class="quest-level">Soal 1 - Echo Dasar dan Variabel String</span>
+            <p>Tampilkan data pribadi (nama, sekolah, kelas) menggunakan variabel dan echo dengan penggabungan teks.</p>
+
+            <span class="quest-level">Soal 2 - Gabung String dengan Benar</span>
+            <p>Buat biodata lengkap dengan menggabungkan nama depan, nama belakang, umur, dan hobi menggunakan titik (.).</p>
+
+            <span class="quest-level">Soal 3 - Operasi Aritmatika Dasar</span>
+            <p>Lakukan perhitungan penjumlahan, pengurangan, perkalian, dan pembagian dari dua angka.</p>
+
+            <span class="quest-level">Soal 4 - Perhitungan Kompleks dengan Output Rapi</span>
+            <p>Buat program hitung rata-rata nilai 3 mata pelajaran dan tentukan status lulus/remidi.</p>
+
+            <span class="quest-level">Soal 5 - Aplikasi Kalkulator Sederhana</span>
+            <p>Buat struk pembelian dengan perhitungan subtotal, diskon, dan total bayar menggunakan tabel HTML.</p>
+
+            <div style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 14px; border: 1px dashed #ccc; color: black;">
+                <strong>Lokasi kunci jawaban:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_5/latihan_1.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_5/latihan_2.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_5/latihan_3.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_5/latihan_4.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_5/latihan_5.php</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Cara Menjalankan PHP di VS Code dan XAMPP</h3>
+            <ol>
+                <li>Buka XAMPP dan hidupkan <strong>Apache</strong>.</li>
+                <li>Buka folder proyek di VS Code.</li>
+                <li>Buat file <code>index.php</code>.</li>
+                <li>Tulis kode PHP di dalam file tersebut.</li>
+                <li>Simpan file lalu buka browser.</li>
+                <li>Ketik alamat project di localhost, contoh <code>http://localhost/portofolio-pertama/</code>.</li>
+                <li>Jika output belum muncul, cek kembali nama file, lokasi folder, dan status Apache.</li>
+            </ol>
+            <div class="alert alert-warning">
+                <strong>Kesalahan umum:</strong> file PHP dibuka dengan double click dari folder biasa. Cara yang benar adalah lewat <code>localhost</code>, bukan langsung dari file explorer.
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <h3>G. Latihan Praktik di Kelas</h3>
+            <ol>
+                <li>Buat folder project baru di <code>C:\xampp\htdocs\</code> dengan nama <code>latihan_php1</code>.</li>
+                <li>Buat file <code>index.php</code> di dalam folder tersebut.</li>
+                <li>Tampilkan nama, kelas, dan umur menggunakan <code>echo</code>.</li>
+                <li>Buat dua variabel angka lalu tampilkan hasil penjumlahannya.</li>
+                <li>Buka hasilnya melalui browser menggunakan alamat <code>http://localhost/latihan_php1/</code>.</li>
+            </ol>
+        </div>
+
+        <div class="quest-box">
+            <h3>H. Pertanyaan Pemahaman</h3>
+            <span class="quest-level">LEVEL DASAR</span>
+            <p>Kenapa file <code>.php</code> tidak cukup dibuka langsung seperti file <code>.html</code>?</p>
+            <p>Kenapa kita harus menulis kode di VS Code tetapi menjalankannya lewat XAMPP dan browser?</p>
+            <p>Jelaskan peran <strong>Apache</strong> dalam satu kalimat sederhana.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>I. Rangkuman</h3>
+            <ul>
+                <li>VS Code dipakai untuk menulis kode.</li>
+                <li>XAMPP dipakai untuk menjalankan PHP di server lokal.</li>
+                <li>File project harus disimpan di folder <code>htdocs</code>.</li>
+                <li>PHP dijalankan lewat alamat <code>localhost</code>.</li>
+                <li>Pertemuan ini adalah dasar sebelum masuk ke form, kondisi, dan database.</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_4.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">⬅️ Kembali (Pertemuan 4)</a>
+            <a href="pertemuan_6.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 6 ➡️</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

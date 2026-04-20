@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 4 - JavaScript Dasar dan Portofolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 1: Front-End UI (Pertemuan Penutup)</span>
+            <h2>Pertemuan 4: JavaScript Dasar untuk Membuat Portofolio Pribadi</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Materi ini dirancang untuk siswa SMA: teori dipahami dulu, lalu praktik bertahap, dan ditutup dengan output akhir berupa website portofolio pribadi.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Pengertian JavaScript dan Fungsinya</h3>
+            <p><strong>JavaScript (JS)</strong> adalah bahasa pemrograman yang membuat halaman web menjadi interaktif. Jika HTML adalah kerangka dan CSS adalah desain, maka JavaScript adalah logika/perilaku.</p>
+            <p>Contoh fungsi JavaScript di website:</p>
+            <ul>
+                <li>Menangani klik tombol, input form, dan menu navigasi.</li>
+                <li>Mengubah teks, warna, dan tampilan elemen tanpa reload halaman.</li>
+                <li>Memvalidasi data sebelum dikirim.</li>
+                <li>Membuat fitur portofolio interaktif (dark mode, filter proyek, dll).</li>
+            </ul>
+            <div class="alert alert-info">
+                <strong>Prasyarat:</strong> Siswa sudah memahami HTML dan CSS dari pertemuan 1-3.
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Dasar JavaScript yang Wajib Dipahami</h3>
+
+            <h4>1) Cara Menulis JavaScript</h4>
+            <ul>
+                <li>Inline: langsung di atribut elemen (contoh: onclick).</li>
+                <li>Internal: di dalam tag <code>&lt;script&gt;</code> pada file HTML.</li>
+                <li>External: file terpisah <code>.js</code> lalu dipanggil dengan <code>&lt;script src="..."&gt;</code>.</li>
+            </ul>
+
+            <h4>2) Tipe Data Dasar</h4>
+            <ul>
+                <li><code>string</code>: teks, contoh <code>"Andi"</code>.</li>
+                <li><code>number</code>: angka, contoh <code>16</code>, <code>3.14</code>.</li>
+                <li><code>boolean</code>: logika benar/salah, nilai <code>true</code> atau <code>false</code>.</li>
+                <li><code>array</code>: kumpulan data, contoh <code>["HTML", "CSS", "JS"]</code>.</li>
+                <li><code>object</code>: data berpasangan key-value, contoh <code>{nama: "Andi", umur: 16}</code>.</li>
+            </ul>
+
+            <h4>3) Variabel</h4>
+            <ul>
+                <li><code>const</code>: nilai tetap, tidak diubah lagi.</li>
+                <li><code>let</code>: nilai bisa diubah.</li>
+            </ul>
+
+            <h4>4) DOM dan Event</h4>
+            <ul>
+                <li><strong>DOM</strong> adalah representasi elemen HTML yang bisa diakses JS.</li>
+                <li><strong>Event</strong> adalah aksi user seperti klik, ketik, submit.</li>
+                <li><strong>addEventListener</strong> adalah cara standar untuk menangani event.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Contoh Kode + Penjelasan Tiap Kode</h3>
+
+            <h4>Contoh 1: JavaScript Aktif dan Variabel Dasar</h4>
+            <pre><code>&lt;script&gt;
+  const nama = "Rani";
+  let umur = 16;
+  let aktifBelajar = true;
+
+  console.log("Nama:", nama);
+  console.log("Umur:", umur);
+  console.log("Aktif belajar:", aktifBelajar);
+&lt;/script&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>const nama = "Rani";</code> membuat variabel tetap bertipe string.</li>
+                <li><code>let umur = 16;</code> membuat variabel angka yang bisa diubah.</li>
+                <li><code>let aktifBelajar = true;</code> membuat variabel boolean.</li>
+                <li><code>console.log(...)</code> menampilkan data di Console browser untuk debugging.</li>
+            </ul>
+
+            <h4>Contoh 2: Mengubah Isi Teks dengan DOM</h4>
+            <pre><code>&lt;h2 id="judul"&gt;Judul Lama&lt;/h2&gt;
+&lt;button id="ubahJudul"&gt;Ubah Judul&lt;/button&gt;
+
+&lt;script&gt;
+  const judul = document.getElementById("judul");
+  const tombol = document.getElementById("ubahJudul");
+
+  tombol.addEventListener("click", function () {
+    judul.textContent = "Website Portofolio Siswa XI";
+  });
+&lt;/script&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>document.getElementById("judul")</code> memilih elemen berdasarkan id <code>judul</code>.</li>
+                <li><code>addEventListener("click", ...)</code> menjalankan fungsi saat tombol diklik.</li>
+                <li><code>textContent</code> mengganti isi teks elemen tanpa menulis HTML baru.</li>
+            </ul>
+
+            <h4>Contoh 3: Validasi Input Sederhana</h4>
+            <pre><code>&lt;input id="nama" type="text" placeholder="Masukkan nama" /&gt;
+&lt;button id="cek"&gt;Cek&lt;/button&gt;
+&lt;p id="hasil"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+  const nama = document.getElementById("nama");
+  const cek = document.getElementById("cek");
+  const hasil = document.getElementById("hasil");
+
+  cek.addEventListener("click", function () {
+    if (nama.value === "") {
+      hasil.textContent = "Nama tidak boleh kosong.";
+      hasil.style.color = "crimson";
+      return;
+    }
+
+    hasil.textContent = "Halo, " + nama.value + "!";
+    hasil.style.color = "green";
+  });
+&lt;/script&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>nama.value</code> membaca isi dari elemen input.</li>
+                <li><code>if (nama.value === "")</code> mengecek apakah input kosong.</li>
+                <li><code>return;</code> menghentikan proses jika kondisi salah.</li>
+                <li><code>hasil.style.color</code> memberi warna teks secara dinamis.</li>
+            </ul>
+
+            <h4>Contoh 4: Toggle Dark Mode</h4>
+            <pre><code>&lt;style&gt;
+  .gelap {
+    background-color: #111827;
+    color: #f9fafb;
+  }
+&lt;/style&gt;
+
+&lt;button id="modeBtn"&gt;Ganti Mode&lt;/button&gt;
+
+&lt;script&gt;
+  const modeBtn = document.getElementById("modeBtn");
+  modeBtn.addEventListener("click", function () {
+    document.body.classList.toggle("gelap");
+  });
+&lt;/script&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>.gelap</code> adalah class CSS untuk tema gelap.</li>
+                <li><code>document.body.classList.toggle("gelap")</code> menambah atau menghapus class <code>gelap</code> setiap kali tombol diklik.</li>
+                <li>Dengan cara ini, logika JS dipisah dari desain CSS dan lebih rapi.</li>
+            </ul>
+        </div>
+
+        <div class="quest-box">
+            <h3>D. Soal Latihan Koding + Kunci Jawaban</h3>
+            <p>Kerjakan latihan berurutan. File kunci jawaban disediakan di folder kunci.</p>
+
+            <span class="quest-level">Soal 1 - Alert dan Console</span>
+            <p>Buat tombol. Saat diklik tampilkan alert "Halo JavaScript" dan log ke console.</p>
+
+            <span class="quest-level">Soal 2 - Ubah Teks Profil</span>
+            <p>Buat paragraf awal "Nama: (kosong)". Saat tombol diklik, ubah menjadi nama siswa.</p>
+
+            <span class="quest-level">Soal 3 - Input Sapaan</span>
+            <p>Buat input nama + tombol. Tampilkan sapaan pada elemen hasil.</p>
+
+            <span class="quest-level">Soal 4 - Toggle Mode Gelap</span>
+            <p>Buat tombol yang mengaktifkan dan menonaktifkan mode gelap menggunakan class.</p>
+
+            <span class="quest-level">Soal 5 - Validasi Form Kontak</span>
+            <p>Buat form mini (nama dan pesan). Jika ada yang kosong, tampilkan error. Jika lengkap, tampilkan pesan sukses.</p>
+
+            <div style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 14px; border: 1px dashed #ccc; color: black;">
+                <strong>Lokasi kunci jawaban:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_4/latihan_1.html</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_4/latihan_2.html</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_4/latihan_3.html</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_4/latihan_4.html</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_4/latihan_5.html</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Output Akhir Fase 1: Website Portofolio Pribadi</h3>
+            <p>Pertemuan 4 adalah pertemuan terakhir fase 1, jadi output akhirnya adalah siswa mampu membuat portofolio pribadi dari gabungan HTML, CSS, dan JavaScript.</p>
+
+            <h4>Spesifikasi Wajib Portofolio</h4>
+            <ol>
+                <li>Header berisi nama, foto, dan deskripsi singkat.</li>
+                <li>Section tentang saya, skill, proyek, dan kontak.</li>
+                <li>Layout rapi dan responsif sederhana.</li>
+                <li>Fitur JS minimal: dark mode, show/hide skill, validasi form.</li>
+            </ol>
+
+            <h4>Contoh Struktur Halaman Portofolio</h4>
+            <pre><code>&lt;header&gt;...&lt;/header&gt;
+&lt;main&gt;
+  &lt;section id="tentang"&gt;...&lt;/section&gt;
+  &lt;section id="skill"&gt;...&lt;/section&gt;
+  &lt;section id="proyek"&gt;...&lt;/section&gt;
+  &lt;section id="kontak"&gt;...&lt;/section&gt;
+&lt;/main&gt;</code></pre>
+
+            <h4>Contoh File Portofolio Jadi (Pilih Salah Satu Gaya)</h4>
+            <p>Tersedia 4 contoh portofolio dengan gaya berbeda untuk referensi/inspirasi:</p>
+            <ol>
+                <li><strong>Portofolio Standar:</strong> <code>learning_platform/kunci_jawaban/pertemuan_4/portofolio_contoh.html</code> — Layout 2 kolom, responsive, dark mode.</li>
+                <li><strong>Minimalis:</strong> <code>learning_platform/kunci_jawaban/pertemuan_4/portofolio_minimalis.html</code> — Design sederhana, 1 kolom, fokus konten.</li>
+                <li><strong>Tech Theme:</strong> <code>learning_platform/kunci_jawaban/pertemuan_4/portofolio_tech.html</code> — Gradient background, badge skill, card-based layout.</li>
+                <li><strong>Developer Pro:</strong> <code>learning_platform/kunci_jawaban/pertemuan_4/portofolio_developer.html</code> — Layout 3 kolom grid, stat cards, lebih profesional.</li>
+                <li><strong>Premium Vibe (New!):</strong> <code>learning_platform/kunci_jawaban/pertemuan_4/portofolio_premium.html</code> — Glassmorphism, animasi dinamis, UI/UX eksklusif kekinian.</li>
+            </ol>
+            <p style="margin-top: 12px; font-style: italic; opacity: 0.8;">Siswa boleh meniru salah satu gaya atau menggabungkan elemen dari beberapa contoh untuk membuat portofolio unik mereka.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Rubrik Penilaian (Untuk Guru)</h3>
+            <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                <tr style="background-color: var(--accent-purple); color: white;">
+                    <th style="padding: 10px; text-align: left;">Aspek</th>
+                    <th style="padding: 10px; text-align: left;">Bobot</th>
+                    <th style="padding: 10px; text-align: left;">Kriteria</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Konsep JavaScript</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">20%</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Memahami variabel, tipe data, DOM, event.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Latihan Koding</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">30%</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Semua soal selesai dan berjalan.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Proyek Portofolio</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">35%</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Fitur wajib tersedia dan interaktif.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Kerapian Kode</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">15%</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Indentasi, penamaan, dan struktur bersih.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content-box">
+            <h3>G. Materi Tambahan: Publish Portofolio ke GitHub (Akun Masing-Masing)</h3>
+            <p>Setelah portofolio selesai, langkah berikutnya adalah mem-publish website agar bisa diakses online. Setiap siswa wajib publish ke akun GitHub masing-masing.</p>
+
+            <h4>1) Persiapan</h4>
+            <ul>
+                <li>Pastikan sudah punya akun GitHub pribadi.</li>
+                <li>Pastikan file utama portofolio bernama <code>index.html</code>.</li>
+                <li>Simpan semua file terkait (HTML, CSS, JS, gambar) dalam satu folder proyek.</li>
+            </ul>
+
+            <h4>2) Buat Repository Baru di GitHub</h4>
+            <ol>
+                <li>Login ke GitHub, klik tombol <strong>New repository</strong>.</li>
+                <li>Isi nama repository, contoh: <code>portofolio-nama-kamu</code>.</li>
+                <li>Pilih <strong>Public</strong>.</li>
+                <li>Klik <strong>Create repository</strong>.</li>
+            </ol>
+
+            <h4>3) Upload Proyek dari Komputer (Via Git)</h4>
+            <p>Buka terminal di folder portofolio, lalu jalankan perintah berikut:</p>
+            <pre><code>git init
+git add .
+git commit -m "Upload portofolio pertama"
+git branch -M main
+git remote add origin https://github.com/USERNAME/portofolio-nama-kamu.git
+git push -u origin main</code></pre>
+            <p><strong>Catatan:</strong> ganti <code>USERNAME</code> dengan username GitHub masing-masing.</p>
+
+            <h4>4) Aktifkan GitHub Pages</h4>
+            <ol>
+                <li>Buka repository di GitHub.</li>
+                <li>Masuk ke menu <strong>Settings</strong> → <strong>Pages</strong>.</li>
+                <li>Pada bagian <strong>Build and deployment</strong>, pilih:</li>
+            </ol>
+            <ul>
+                <li><strong>Source:</strong> Deploy from a branch</li>
+                <li><strong>Branch:</strong> main</li>
+                <li><strong>Folder:</strong> / (root)</li>
+            </ul>
+            <ol start="4">
+                <li>Klik <strong>Save</strong>.</li>
+                <li>Tunggu 1-3 menit sampai link website muncul.</li>
+            </ol>
+
+            <h4>5) Format Link Website Siswa</h4>
+            <p>Link website biasanya berbentuk:</p>
+            <pre><code>https://username.github.io/portofolio-nama-kamu/</code></pre>
+
+            <h4>6) Checklist Penilaian Publish</h4>
+            <ul>
+                <li>Link website bisa dibuka dari perangkat lain.</li>
+                <li>Tidak ada gambar/CSS/JS yang rusak (broken).</li>
+                <li>Fitur JavaScript tetap berjalan (dark mode, show/hide skill, validasi form).</li>
+                <li>Repository berisi commit minimal 2 kali (upload awal + revisi).</li>
+            </ul>
+
+            <h4>7) Troubleshooting Cepat</h4>
+            <ul>
+                <li>Jika halaman kosong, cek apakah file utama bernama <code>index.html</code>.</li>
+                <li>Jika style hilang, cek path file CSS/JS apakah sesuai folder.</li>
+                <li>Jika <code>git push</code> ditolak, jalankan <code>git pull origin main --rebase</code> lalu push lagi.</li>
+                <li>Jika link belum aktif, tunggu beberapa menit lalu refresh halaman Pages.</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_3.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">⬅️ Kembali (Pertemuan 3)</a>
+            <a href="pertemuan_5.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Fase 2 (Pertemuan 5) ➡️</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

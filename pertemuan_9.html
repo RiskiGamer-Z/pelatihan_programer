@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 9 - Mulai Project Pendataan Siswa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 2: Backend Logic</span>
+            <h2>Pertemuan 9: Mulai Project Pendataan Siswa Sederhana</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Mulai dari pertemuan ini siswa membangun output 2 secara bertahap agar tidak menumpuk menjelang ujian.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Pembelajaran</h3>
+            <ul>
+                <li>Memulai project pendataan siswa sederhana.</li>
+                <li>Menghubungkan form input dengan penyimpanan data sementara.</li>
+                <li>Menampilkan data siswa ke tabel menggunakan loop.</li>
+                <li>Membuat fitur reset data agar mudah saat uji coba.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Scope Project Hari Ini</h3>
+            <ol>
+                <li>Form input data siswa: nama, kelas, jurusan.</li>
+                <li>Simpan data ke <code>$_SESSION</code> (sementara, mudah untuk belajar).</li>
+                <li>Tampilkan daftar data dalam tabel HTML.</li>
+                <li>Tambahkan tombol reset untuk menghapus semua data latihan.</li>
+            </ol>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Alur Program Pendataan</h3>
+            <ul>
+                <li>Input form -> validasi -> simpan data.</li>
+                <li>Data lama tetap tampil saat halaman di-refresh.</li>
+                <li>Data ditampilkan dengan perulangan.</li>
+                <li>Reset data jika tombol "Hapus Semua Data" ditekan.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Konsep Inti yang Dipakai</h3>
+
+            <h4>1. Session untuk menyimpan data sementara</h4>
+            <p><code>$_SESSION</code> membantu kita menyimpan data selama browser belum ditutup. Cocok untuk latihan project awal sebelum masuk database.</p>
+            <pre><code>&lt;?php
+session_start();
+
+if (!isset($_SESSION['data_siswa'])) {
+    $_SESSION['data_siswa'] = [];
+}
+?&gt;</code></pre>
+
+            <h4>2. Form POST untuk input data</h4>
+            <p>Gunakan method <code>POST</code> untuk mengirim data dari form ke proses PHP.</p>
+            <pre><code>&lt;form method="POST" action=""&gt;
+    &lt;input type="text" name="nama" placeholder="Nama" required&gt;
+    &lt;input type="text" name="kelas" placeholder="Kelas" required&gt;
+    &lt;input type="text" name="jurusan" placeholder="Jurusan" required&gt;
+    &lt;button type="submit" name="simpan"&gt;Simpan&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+            <h4>3. Loop untuk menampilkan data ke tabel</h4>
+            <p>Kita gunakan <code>foreach</code> agar setiap data siswa tampil otomatis sebagai baris tabel.</p>
+            <pre><code>&lt;?php foreach ($_SESSION['data_siswa'] as $index =&gt; $siswa): ?&gt;
+&lt;tr&gt;
+    &lt;td&gt;&lt;?php echo $index + 1; ?&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;?php echo $siswa['nama']; ?&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;?php echo $siswa['kelas']; ?&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;?php echo $siswa['jurusan']; ?&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;?php endforeach; ?&gt;</code></pre>
+
+            <h4>4. Validasi input wajib isi</h4>
+            <p>Sebelum data disimpan, pastikan semua input tidak kosong.</p>
+            <pre><code>&lt;?php
+$nama = trim($_POST['nama'] ?? '');
+$kelas = trim($_POST['kelas'] ?? '');
+$jurusan = trim($_POST['jurusan'] ?? '');
+
+if ($nama === '' || $kelas === '' || $jurusan === '') {
+    $pesanError = 'Semua field wajib diisi.';
+}
+?&gt;</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Contoh Implementasi Sederhana</h3>
+            <h4>Contoh Utama (Full File): Input + Tabel + Reset</h4>
+            <p>Salin kode ini ke file <code>pendataan_siswa.php</code>, lalu jalankan dari browser. Kode sudah lengkap HTML + PHP sehingga tidak blank.</p>
+            <pre><code>&lt;?php
+session_start();
+
+if (!isset($_SESSION['data_siswa'])) {
+    $_SESSION['data_siswa'] = [];
+}
+
+$pesan = '';
+
+if (isset($_POST['simpan'])) {
+    $nama = trim($_POST['nama'] ?? '');
+    $kelas = trim($_POST['kelas'] ?? '');
+    $jurusan = trim($_POST['jurusan'] ?? '');
+
+    if ($nama === '' || $kelas === '' || $jurusan === '') {
+        $pesan = 'Semua field wajib diisi.';
+    } else {
+        $_SESSION['data_siswa'][] = [
+            'nama' =&gt; htmlspecialchars($nama),
+            'kelas' =&gt; htmlspecialchars($kelas),
+            'jurusan' =&gt; htmlspecialchars($jurusan)
+        ];
+        $pesan = 'Data berhasil disimpan.';
+    }
+}
+
+if (isset($_POST['reset'])) {
+    $_SESSION['data_siswa'] = [];
+    $pesan = 'Semua data berhasil dihapus.';
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Pendataan Siswa Sederhana&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Pendataan Siswa&lt;/h2&gt;
+
+    &lt;?php if ($pesan !== ''): ?&gt;
+        &lt;p&gt;&lt;?php echo $pesan; ?&gt;&lt;/p&gt;
+    &lt;?php endif; ?&gt;
+
+    &lt;form method="POST" action=""&gt;
+        &lt;input type="text" name="nama" placeholder="Nama"&gt;
+        &lt;input type="text" name="kelas" placeholder="Kelas"&gt;
+        &lt;input type="text" name="jurusan" placeholder="Jurusan"&gt;
+        &lt;button type="submit" name="simpan"&gt;Simpan&lt;/button&gt;
+        &lt;button type="submit" name="reset"&gt;Hapus Semua Data&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;hr&gt;
+
+    &lt;?php if (count($_SESSION['data_siswa']) === 0): ?&gt;
+        &lt;p&gt;Belum ada data siswa.&lt;/p&gt;
+    &lt;?php else: ?&gt;
+        &lt;table border="1" cellpadding="8" cellspacing="0"&gt;
+            &lt;tr&gt;
+                &lt;th&gt;No&lt;/th&gt;
+                &lt;th&gt;Nama&lt;/th&gt;
+                &lt;th&gt;Kelas&lt;/th&gt;
+                &lt;th&gt;Jurusan&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;?php foreach ($_SESSION['data_siswa'] as $index =&gt; $siswa): ?&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;&lt;?php echo $index + 1; ?&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;?php echo $siswa['nama']; ?&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;?php echo $siswa['kelas']; ?&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;?php echo $siswa['jurusan']; ?&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;/table&gt;
+    &lt;?php endif; ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>Contoh Full File Versi Minimal (Cepat Coba)</h4>
+            <pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['siswa'])) $_SESSION['siswa'] = [];
+
+if (isset($_POST['tambah']) && trim($_POST['nama'] ?? '') !== '') {
+    $_SESSION['siswa'][] = htmlspecialchars(trim($_POST['nama']));
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Versi Minimal&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form method="POST"&gt;
+        &lt;input type="text" name="nama" placeholder="Nama siswa"&gt;
+        &lt;button type="submit" name="tambah"&gt;Tambah&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;ul&gt;
+        &lt;?php foreach ($_SESSION['siswa'] as $nama): ?&gt;
+            &lt;li&gt;&lt;?php echo $nama; ?&gt;&lt;/li&gt;
+        &lt;?php endforeach; ?&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h4>Contoh Full File + CSS + Sedikit JavaScript</h4>
+            <p>Contoh ini menambahkan tampilan card sederhana dengan CSS dan JavaScript kecil untuk konfirmasi sebelum reset data.</p>
+            <pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['data_siswa'])) {
+    $_SESSION['data_siswa'] = [];
+}
+
+if (isset($_POST['simpan'])) {
+    $nama = trim($_POST['nama'] ?? '');
+    if ($nama !== '') {
+        $_SESSION['data_siswa'][] = htmlspecialchars($nama);
+    }
+}
+
+if (isset($_POST['reset'])) {
+    $_SESSION['data_siswa'] = [];
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Pendataan Siswa + CSS + JS&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            max-width: 520px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        h2 { margin-top: 0; }
+        form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #d0d7e2;
+            border-radius: 8px;
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            background: #3b82f6;
+        }
+        .btn-reset { background: #ef4444; }
+        .badge {
+            display: inline-block;
+            margin-bottom: 10px;
+            background: #e0ecff;
+            color: #1e40af;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;span class="badge" id="jumlahData"&gt;Total data: &lt;?php echo count($_SESSION['data_siswa']); ?&gt;&lt;/span&gt;
+        &lt;h2&gt;Pendataan Siswa&lt;/h2&gt;
+
+        &lt;form method="POST" action=""&gt;
+            &lt;input type="text" name="nama" placeholder="Nama siswa"&gt;
+            &lt;button type="submit" name="simpan"&gt;Tambah&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;form method="POST" action="" onsubmit="return konfirmasiReset();"&gt;
+            &lt;button type="submit" class="btn-reset" name="reset"&gt;Hapus Semua Data&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;ul&gt;
+            &lt;?php foreach ($_SESSION['data_siswa'] as $nama): ?&gt;
+                &lt;li&gt;&lt;?php echo $nama; ?&gt;&lt;/li&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        function konfirmasiReset() {
+            return confirm('Yakin ingin menghapus semua data?');
+        }
+
+        // Contoh JS kecil: ubah warna badge jika data lebih dari 5
+        const total = &lt;?php echo count($_SESSION['data_siswa']); ?&gt;;
+        const badge = document.getElementById('jumlahData');
+        if (total &gt; 5) {
+            badge.style.background = '#fde68a';
+            badge.style.color = '#92400e';
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="exercise-box">
+            <h3>F. Latihan Praktik (4 Soal Sederhana)</h3>
+            <ol>
+                <li><strong>Latihan 1:</strong> Buat form input siswa dan simpan ke session.</li>
+                <li><strong>Latihan 2:</strong> Tampilkan data siswa dari session ke tabel.</li>
+                <li><strong>Latihan 3:</strong> Tambahkan validasi sederhana agar field tidak kosong.</li>
+                <li><strong>Latihan 4:</strong> Tambahkan tombol "Hapus Semua Data".</li>
+            </ol>
+
+            <p><a href="kunci_jawaban/pertemuan_9/latihan_1_soal.php" target="_blank">📖 Latihan 1 Soal</a> | <a href="kunci_jawaban/pertemuan_9/latihan_1_kunci.php" target="_blank">✅ Kunci 1</a></p>
+            <p><a href="kunci_jawaban/pertemuan_9/latihan_2_soal.php" target="_blank">📖 Latihan 2 Soal</a> | <a href="kunci_jawaban/pertemuan_9/latihan_2_kunci.php" target="_blank">✅ Kunci 2</a></p>
+            <p><a href="kunci_jawaban/pertemuan_9/latihan_3_soal.php" target="_blank">📖 Latihan 3 Soal</a> | <a href="kunci_jawaban/pertemuan_9/latihan_3_kunci.php" target="_blank">✅ Kunci 3</a></p>
+            <p><a href="kunci_jawaban/pertemuan_9/latihan_4_soal.php" target="_blank">📖 Latihan 4 Soal</a> | <a href="kunci_jawaban/pertemuan_9/latihan_4_kunci.php" target="_blank">✅ Kunci 4</a></p>
+        </div>
+
+        <div class="quest-box">
+            <h3>G. Target Akhir Pertemuan</h3>
+            <span class="quest-level">PROGRESS 60%</span>
+            <p>Di akhir hari ini aplikasi sudah bisa input dan menampilkan data. Fitur hapus dan penyempurnaan dikerjakan di pertemuan 10.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>H. Checklist Sebelum Lanjut Pertemuan 10</h3>
+            <ul>
+                <li>Form input berjalan normal.</li>
+                <li>Data masuk ke session dan muncul di tabel.</li>
+                <li>Validasi minimal field kosong sudah dibuat.</li>
+                <li>Reset data bisa dipakai saat testing.</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_8.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 8)</a>
+            <a href="pertemuan_10.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 10</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

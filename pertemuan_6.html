@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 6 - If Else PHP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 2: Backend Logic</span>
+            <h2>Pertemuan 6: Percabangan If Else di PHP</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Di pertemuan ini siswa belajar membuat keputusan pada program PHP menggunakan <code>if</code>, <code>else</code>, dan <code>elseif</code>.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Konsep Dasar Percabangan</h3>
+            <p><strong>Percabangan</strong> adalah cara program memilih aksi berdasarkan syarat tertentu. Jika syarat bernilai <strong>true</strong>, program menjalankan blok A. Jika <strong>false</strong>, program menjalankan blok B.</p>
+            <p>Fungsi percabangan di project nyata:</p>
+            <ul>
+                <li>Menentukan lulus atau tidak lulus berdasarkan nilai.</li>
+                <li>Menentukan diskon berdasarkan total belanja.</li>
+                <li>Menentukan status akun (aktif/nonaktif).</li>
+                <li>Menentukan hak akses (admin atau user).</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Operator Perbandingan & Logika</h3>
+            <p>Sebelum menulis <code>if</code>, kita harus tahu cara membandingkan nilai. Hasilnya selalu boolean: <code>true</code> atau <code>false</code>.</p>
+            <ul>
+                <li><code>==</code> sama dengan.</li>
+                <li><code>!=</code> tidak sama dengan.</li>
+                <li><code>&gt;</code> lebih besar dari.</li>
+                <li><code>&lt;</code> lebih kecil dari.</li>
+                <li><code>&gt;=</code> lebih besar atau sama dengan.</li>
+                <li><code>&lt;=</code> lebih kecil atau sama dengan.</li>
+            </ul>
+            <p><strong>Operator logika:</strong></p>
+            <ul>
+                <li><code>&&</code> (dan): semua syarat harus benar.</li>
+                <li><code>||</code> (atau): cukup salah satu syarat benar.</li>
+                <li><code>!</code> (negasi): membalik true menjadi false, atau sebaliknya.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Struktur If Else dan Elseif</h3>
+            <p>Gunakan struktur berikut untuk membuat keputusan:</p>
+<pre><code>&lt;?php
+if ($kondisi) {
+    // aksi jika benar
+} else {
+    // aksi jika salah
+}
+?&gt;</code></pre>
+
+            <p>Jika kondisi lebih dari dua pilihan, gunakan <code>elseif</code>:</p>
+            <pre><code>&lt;?php
+$nilai = 78;
+
+if ($nilai &gt;= 90) {
+    echo "Grade A";
+} elseif ($nilai &gt;= 75) {
+    echo "Grade B";
+} else {
+    echo "Grade C";
+}
+?&gt;</code></pre>
+
+            <div class="alert alert-warning">
+                <strong>Catatan penting:</strong> Perhatikan kurung <code>()</code>, kurung kurawal <code>{}</code>, dan titik koma <code>;</code> agar tidak terjadi syntax error.
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Contoh Kode + Penjelasan</h3>
+
+            <h4>Contoh 1: If Else Sederhana</h4>
+            <pre><code>&lt;?php
+$umur = 17;
+
+if ($umur &gt;= 17) {
+    echo "Anda boleh membuat SIM.";
+} else {
+    echo "Anda belum cukup umur.";
+}
+?&gt;</code></pre>
+            <ul>
+                <li>Jika <code>$umur</code> minimal 17, output izin membuat SIM.</li>
+                <li>Jika tidak, output belum cukup umur.</li>
+            </ul>
+
+            <h4>Contoh 2: If Elseif Else (3 kondisi)</h4>
+            <pre><code>&lt;?php
+$nilai = 82;
+
+if ($nilai &gt;= 90) {
+    echo "Grade A";
+} elseif ($nilai &gt;= 75) {
+    echo "Grade B";
+} else {
+    echo "Grade C";
+}
+?&gt;</code></pre>
+            <ul>
+                <li><code>if</code> untuk kondisi pertama.</li>
+                <li><code>elseif</code> untuk kondisi lanjutan.</li>
+                <li><code>else</code> untuk kondisi sisa jika semua gagal.</li>
+            </ul>
+
+            <h4>Contoh 3: Operator Logika</h4>
+            <pre><code>&lt;?php
+$nilai = 80;
+$kehadiran = 90;
+
+if ($nilai &gt;= 75 && $kehadiran &gt;= 80) {
+    echo "Lulus";
+} else {
+    echo "Belum lulus";
+}
+?&gt;</code></pre>
+            <ul>
+                <li><code>&&</code> berarti kedua syarat wajib benar.</li>
+                <li>Jika salah satu syarat gagal, hasilnya masuk ke <code>else</code>.</li>
+            </ul>
+        </div>
+
+        <div class="quest-box">
+            <h3>E. Soal Latihan Koding + Kunci Jawaban</h3>
+            <p>Kerjakan latihan dari level mudah ke menengah.</p>
+            <ol>
+                <li><strong>Soal 1:</strong> Buat if else untuk cek kelulusan berdasarkan nilai minimal 75.</li>
+                <li><strong>Soal 2:</strong> Buat if elseif else untuk menampilkan grade A, B, atau C.</li>
+                <li><strong>Soal 3:</strong> Buat keputusan diskon berdasarkan total belanja.</li>
+                <li><strong>Soal 4:</strong> Gunakan operator logika untuk cek kelulusan dari nilai dan kehadiran.</li>
+                <li><strong>Soal 5:</strong> Buat nested if untuk menentukan bonus karyawan.</li>
+                <li><strong>Soal 6:</strong> Buat program cek bilangan: jika angka lebih dari 0 tampilkan "Positif", jika kurang dari 0 tampilkan "Negatif", jika sama dengan 0 tampilkan "Nol".</li>
+            </ol>
+
+            <div style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 14px; border: 1px dashed #ccc; color: black;">
+                <strong>Lokasi kunci jawaban:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_6/latihan_1.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_6/latihan_2.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_6/latihan_3.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_6/latihan_4.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_6/latihan_5.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_6/latihan_6.php</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Praktik Menjalankan File Latihan</h3>
+            <ol>
+                <li>Jalankan Apache dari XAMPP.</li>
+                <li>Pastikan file latihan ada di folder project.</li>
+                <li>Buka browser dengan alamat localhost, contoh: <code>http://localhost/learning_platform/kunci_jawaban/pertemuan_6/latihan_1.php</code>.</li>
+                <li>Ubah nilai variabel untuk menguji kondisi true dan false.</li>
+            </ol>
+            <div class="alert alert-info">
+                <strong>Tips debug:</strong> Jika hasil tidak berubah, pastikan file sudah disimpan lalu refresh browser.
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>G. Rangkuman</h3>
+            <ul>
+                <li><code>if</code> dipakai untuk kondisi tunggal.</li>
+                <li><code>if - elseif - else</code> dipakai untuk banyak kemungkinan.</li>
+                <li>Operator logika membantu menggabungkan beberapa syarat.</li>
+                <li>Percabangan adalah dasar penting sebelum masuk form processing.</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_5.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">⬅️ Kembali (Pertemuan 5)</a>
+            <a href="pertemuan_7.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 7 ➡️</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

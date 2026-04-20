@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 7 - Perulangan dan Array Dasar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 2: Backend Logic</span>
+            <h2>Pertemuan 7: Perulangan dan Array Dasar</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Materi digabung agar siswa lebih cepat masuk project: looping dan array dipakai bersamaan untuk menampilkan data secara dinamis.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Pertemuan</h3>
+            <ul>
+                <li>Menggunakan <code>for</code>, <code>while</code>, dan <code>foreach</code>.</li>
+                <li>Menyimpan banyak data dengan array numerik dan asosiatif.</li>
+                <li>Menampilkan data array dengan perulangan ke HTML.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Konsep Dasar Perulangan</h3>
+            <p><strong>Perulangan</strong> digunakan saat kita ingin menjalankan perintah yang sama berkali-kali tanpa menulis kode berulang secara manual.</p>
+            <p>Contoh kebutuhan nyata:</p>
+            <ul>
+                <li>Mencetak nomor absen 1 sampai 36.</li>
+                <li>Menampilkan daftar siswa dari data array.</li>
+                <li>Mencetak tabel nilai dari banyak data.</li>
+            </ul>
+            <div class="alert alert-info">
+                <strong>Ingat:</strong> jika kondisi perulangan tidak berubah, program bisa masuk loop tak berujung (infinite loop).
+            </div>
+            <h4>Struktur Umum Perulangan</h4>
+            <ul>
+                <li><strong>Nilai awal:</strong> titik mulai perhitungan.</li>
+                <li><strong>Kondisi:</strong> syarat apakah loop lanjut atau berhenti.</li>
+                <li><strong>Perubahan nilai:</strong> penambahan/pengurangan agar loop bergerak.</li>
+            </ul>
+            <p>Jika salah satu dari tiga bagian ini tidak benar, program bisa berhenti terlalu cepat atau tidak berhenti sama sekali.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Jenis Perulangan di PHP</h3>
+
+            <h4>Ringkasan Pemakaian</h4>
+            <ul>
+                <li><code>for</code>: saat jumlah putaran sudah diketahui.</li>
+                <li><code>while</code>: saat bergantung kondisi yang berubah.</li>
+                <li><code>foreach</code>: saat membaca data array.</li>
+            </ul>
+
+            <h4>1) For</h4>
+            <p>Dipakai saat jumlah pengulangan sudah jelas (misal 1 sampai 10).</p>
+<pre><code>&lt;?php
+for ($i = 1; $i &lt;= 5; $i++) {
+    echo "Data ke-" . $i . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>for ($i = 1; ...)</code>: membuat variabel penghitung <code>$i</code> mulai dari 1.</li>
+                <li><code>$i &lt;= 5</code>: loop akan terus berjalan selama nilai <code>$i</code> belum melewati 5.</li>
+                <li><code>$i++</code>: setiap putaran, nilai <code>$i</code> ditambah 1.</li>
+                <li><code>echo "Data ke-" . $i</code>: menampilkan teks + nilai <code>$i</code> di tiap putaran.</li>
+                <li><code>&lt;br&gt;</code>: pindah baris agar hasil tidak menumpuk dalam satu baris.</li>
+            </ul>
+
+            <h4>2) While</h4>
+            <p>Dipakai saat perulangan bergantung kondisi tertentu.</p>
+<pre><code>&lt;?php
+$angka = 1;
+
+while ($angka &lt;= 5) {
+    echo "Angka: " . $angka . "&lt;br&gt;";
+    $angka++;
+}
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>$angka = 1;</code>: nilai awal.</li>
+                <li><code>while ($angka &lt;= 5)</code>: cek kondisi sebelum masuk ke blok.</li>
+                <li><code>echo ...</code>: menampilkan nilai saat ini.</li>
+                <li><code>$angka++;</code>: wajib ada agar nilai berubah dan loop bisa selesai.</li>
+            </ul>
+
+            <h4>3) Foreach</h4>
+            <p>Dipakai khusus untuk membaca isi array.</p>
+<pre><code>&lt;?php
+$namaSiswa = ["Andi", "Sinta", "Rudi"];
+
+foreach ($namaSiswa as $nama) {
+    echo "Nama siswa: " . $nama . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>$namaSiswa = [...]</code>: array berisi 3 nama.</li>
+                <li><code>foreach ($namaSiswa as $nama)</code>: setiap item array disimpan sementara ke variabel <code>$nama</code>.</li>
+                <li><code>echo ... $nama</code>: menampilkan item yang sedang dibaca.</li>
+            </ul>
+
+            <h4>4) Do-While (Contoh Tambahan)</h4>
+            <p>Do-while mengeksekusi blok minimal 1 kali dulu, baru mengecek kondisi.</p>
+<pre><code>&lt;?php
+$nomor = 1;
+
+do {
+    echo "Nomor antrian: " . $nomor . "&lt;br&gt;";
+    $nomor++;
+} while ($nomor &lt;= 3);
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>do { ... }</code>: blok dijalankan terlebih dahulu.</li>
+                <li><code>$nomor++</code>: menambah nilai agar mendekati kondisi berhenti.</li>
+                <li><code>while ($nomor &lt;= 3)</code>: setelah blok jalan, barulah kondisi dicek.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Dasar Array untuk Menyimpan Data</h3>
+            <p>Array adalah variabel yang bisa menyimpan banyak nilai sekaligus.</p>
+
+            <h4>Jenis Array di PHP</h4>
+            <ul>
+                <li><strong>Array numerik:</strong> indeks berupa angka otomatis (0, 1, 2, ...).</li>
+                <li><strong>Array asosiatif:</strong> indeks berupa kata kunci (misal <code>nama</code>, <code>kelas</code>).</li>
+                <li><strong>Array multidimensi:</strong> array di dalam array, cocok untuk data tabel.</li>
+            </ul>
+
+            <h4>1) Array Numerik</h4>
+<pre><code>&lt;?php
+$jurusan = ["RPL", "TKJ", "DKV"];
+echo $jurusan[0];
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>$jurusan = [...]</code>: membuat array dengan 3 nilai.</li>
+                <li><code>$jurusan[0]</code>: mengambil item pertama, yaitu <code>RPL</code>.</li>
+            </ul>
+
+            <h4>2) Array Asosiatif</h4>
+<pre><code>&lt;?php
+$siswa = [
+    "nama" =&gt; "Budi",
+    "kelas" =&gt; "XI RPL",
+    "nilai" =&gt; 88
+];
+
+echo $siswa["nama"];
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>"nama" =&gt; "Budi"</code>: menyimpan nilai <code>Budi</code> dengan kunci <code>nama</code>.</li>
+                <li><code>echo $siswa["nama"]</code>: mengakses data berdasarkan kunci teks.</li>
+            </ul>
+
+            <h4>3) Array Multidimensi (Contoh Tambahan)</h4>
+<pre><code>&lt;?php
+$kelas = [
+    ["nama" =&gt; "Andi", "nilai" =&gt; 88],
+    ["nama" =&gt; "Sinta", "nilai" =&gt; 92]
+];
+
+echo $kelas[1]["nama"];
+?&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>$kelas[0]</code> dan <code>$kelas[1]</code>: masing-masing menyimpan 1 data siswa.</li>
+                <li><code>$kelas[1]["nama"]</code>: mengambil nama siswa pada index ke-1, yaitu <code>Sinta</code>.</li>
+                <li>Model ini umum dipakai untuk menampilkan data tabel dari banyak baris.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Contoh Integrasi Loop + Array + HTML Tabel</h3>
+<pre><code>&lt;?php
+$dataSiswa = [
+    ["nama" =&gt; "Andi", "kelas" =&gt; "XI RPL", "nilai" =&gt; 90],
+    ["nama" =&gt; "Sinta", "kelas" =&gt; "XI TKJ", "nilai" =&gt; 85],
+    ["nama" =&gt; "Rudi", "kelas" =&gt; "XI DKV", "nilai" =&gt; 78]
+];
+?&gt;</code></pre>
+<pre><code>&lt;table border="1" cellpadding="8" cellspacing="0"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;No&lt;/th&gt;
+        &lt;th&gt;Nama&lt;/th&gt;
+        &lt;th&gt;Kelas&lt;/th&gt;
+        &lt;th&gt;Nilai&lt;/th&gt;
+    &lt;/tr&gt;
+
+    &lt;?php foreach ($dataSiswa as $index =&gt; $item): ?&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;?php echo $index + 1; ?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $item["nama"]; ?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $item["kelas"]; ?&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;?php echo $item["nilai"]; ?&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/table&gt;</code></pre>
+            <p><strong>Penjelasan per kode:</strong></p>
+            <ul>
+                <li><code>$dataSiswa</code>: array multidimensi, tiap item mewakili satu siswa.</li>
+                <li><code>foreach ($dataSiswa as $index =&gt; $item)</code>: membaca data per siswa.</li>
+                <li><code>$index + 1</code>: membuat nomor urut mulai dari 1.</li>
+                <li><code>$item["nama"]</code>, <code>$item["kelas"]</code>, <code>$item["nilai"]</code>: membaca nilai berdasarkan kunci.</li>
+                <li><code>endforeach;</code>: penutup gaya template PHP yang rapi saat bercampur HTML.</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>F. Latihan Pertemuan 7</h3>
+            <ol>
+                <li><strong>Latihan Perulangan 1:</strong> Cetak angka 1 sampai 20 dan label Genap/Ganjil.</li>
+                <li><strong>Latihan Perulangan 2:</strong> Cetak tabel perkalian angka 7 dari 1 sampai 10.</li>
+                <li><strong>Latihan Array 1:</strong> Tampilkan daftar 5 siswa dari array numerik dengan nomor urut.</li>
+                <li><strong>Latihan Array 2:</strong> Tampilkan array multidimensi siswa (nama, kelas, nilai) ke tabel HTML.</li>
+                <li><strong>Latihan Gabungan Loop + Array:</strong> Tampilkan daftar siswa dari array multidimensi, hitung rata-rata nilai, lalu tampilkan status Lulus/Remedial untuk tiap siswa.</li>
+            </ol>
+        </div>
+
+        <div class="content-box">
+            <h3>G. Kode Latihan dan Kunci Jawaban</h3>
+            <p>Gunakan file soal (latihan) berikut untuk dikerjakan siswa, lalu cocokkan dengan file kunci jawaban.</p>
+            <div style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 10px; border: 1px dashed #ccc; color: black;">
+                <strong>File soal latihan:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_1_soal.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_2_soal.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_3_soal.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_4_soal.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_5_soal.php</code></li>
+                </ul>
+            </div>
+            <div style="background-color: #fff; padding: 12px; border-radius: 6px; margin-top: 10px; border: 1px dashed #ccc; color: black;">
+                <strong>File kunci jawaban:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_1_kunci.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_2_kunci.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_3_kunci.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_4_kunci.php</code></li>
+                    <li><code>learning_platform/kunci_jawaban/pertemuan_7/latihan_5_kunci.php</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quest-box">
+            <h3>H. Mini Project (Opsional)</h3>
+            <span class="quest-level">PERSIAPAN OUTPUT 2</span>
+            <p>Buat halaman <code>daftar_siswa.php</code> yang menampilkan data siswa dalam tabel dan menandai nilai di bawah 75 dengan teks "Perlu Bimbingan".</p>
+            <p>Tujuan mini project ini adalah mempersiapkan pondasi project Pendataan Siswa Sederhana yang dimulai di pertemuan 9.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>I. Kesalahan Umum yang Harus Dihindari</h3>
+            <ul>
+                <li>Lupa menambah/mengurangi variabel loop di <code>while</code> sehingga terjadi infinite loop.</li>
+                <li>Salah menulis operator kondisi (misal <code>=</code> seharusnya <code>==</code> untuk perbandingan).</li>
+                <li>Salah indeks array (misal memanggil indeks yang tidak ada).</li>
+                <li>Lupa menutup kurung kurawal <code>{}</code> pada blok perulangan.</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_6.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 6)</a>
+            <a href="pertemuan_8.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 8</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

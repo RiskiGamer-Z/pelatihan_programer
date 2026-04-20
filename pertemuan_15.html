@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 15 - Ujian 3 CRUD dan Presentasi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase Ujian Output</span>
+            <h2>Pertemuan 15: Ujian 3 - Sistem Informasi Sekolah CRUD + Presentasi</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Ujian puncak: siswa mengintegrasikan front-end, PHP, dan database MySQL dalam satu project CRUD yang stabil lalu mempresentasikannya.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Ujian Akhir</h3>
+            <ul>
+                <li>Siswa mampu membangun aplikasi CRUD berbasis database secara utuh.</li>
+                <li>Siswa mampu menunjukkan alur data dari form ke database dan kembali ke tampilan.</li>
+                <li>Siswa mampu menjelaskan arsitektur file project saat presentasi.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Requirement Teknis Wajib</h3>
+            <ol>
+                <li>Project terkoneksi ke database MySQL melalui <code>config.php</code>.</li>
+                <li>Fitur Create, Read, Update, Delete berjalan semua.</li>
+                <li>Header menu tersedia minimal: Beranda, Data Siswa, Tambah Data, Kontak.</li>
+                <li>Form tambah dan edit memiliki validasi dasar.</li>
+                <li>Ada konfirmasi sebelum aksi hapus.</li>
+                <li>Tampilan sudah memakai CSS terpisah dan JavaScript terpisah.</li>
+            </ol>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Struktur File yang Disarankan</h3>
+            <pre><code>sistem_informasi_sekolah/
+├── config.php
+├── header.php
+├── beranda.php
+├── index.php
+├── tambah.php
+├── edit.php
+├── update.php
+├── hapus.php
+├── kontak.php
+├── style.css
+└── script.js</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Checklist Fungsional Sebelum Presentasi</h3>
+            <ul>
+                <li>Koneksi database berhasil tanpa warning.</li>
+                <li>Tambah data masuk ke tabel database.</li>
+                <li>Data tampil di halaman index.</li>
+                <li>Edit data mengubah isi database dengan benar.</li>
+                <li>Hapus data berhasil dan ada konfirmasi popup.</li>
+                <li>Menu header berpindah halaman tanpa link rusak.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Jadwal Pelaksanaan Ujian</h3>
+            <ol>
+                <li><strong>13.00 - 15.00:</strong> waktu pengerjaan utama project CRUD.</li>
+                <li><strong>15.30 - 17.00:</strong> sesi review, revisi, dan perbaikan kode sebelum presentasi.</li>
+            </ol>
+            <p><strong>Alokasi kerja saat 13.00 - 15.00:</strong> finalisasi fitur CRUD, validasi, konfirmasi hapus, dan pengecekan koneksi database.</p>
+            <p><strong>Alokasi kerja saat 15.30 - 17.00:</strong> debug akhir, rapikan tampilan, latihan presentasi, dan uji demo end-to-end.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Alur Presentasi Siswa (10 Menit)</h3>
+            <ol>
+                <li>1 menit: perkenalan project dan tujuan aplikasi.</li>
+                <li>2 menit: jelaskan struktur file (config, header, halaman CRUD).</li>
+                <li>4 menit: demo alur CRUD lengkap (tambah, tampil, edit, hapus).</li>
+                <li>2 menit: jelaskan CSS/JS yang dipakai (validasi, konfirmasi, navigasi).</li>
+                <li>1 menit: penutup dan rencana pengembangan.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-box">
+            <h3>G. Format Tanya Jawab Penguji</h3>
+            <ul>
+                <li>Tunjukkan letak file koneksi database.</li>
+                <li>Jelaskan perbedaan halaman index, tambah, edit, update, hapus.</li>
+                <li>Tunjukkan bagian validasi input pada form.</li>
+                <li>Jelaskan kenapa konfirmasi hapus penting.</li>
+            </ul>
+        </div>
+
+        <div class="quest-box">
+            <h3>H. Rubrik Penilaian Akhir</h3>
+            <span class="quest-level">TOTAL 100 POIN</span>
+            <ul>
+                <li>CRUD berfungsi end-to-end (40 poin)</li>
+                <li>Struktur kode dan file project (15 poin)</li>
+                <li>Tampilan UI dan konsistensi halaman (15 poin)</li>
+                <li>Validasi dan error handling dasar (10 poin)</li>
+                <li>Kualitas presentasi dan pemahaman konsep (20 poin)</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>I. Akumulasi 3 Output Pelatihan</h3>
+            <ul>
+                <li>Website Pribadi (Pertemuan 13): 30%</li>
+                <li>Pendataan Siswa Sederhana (Pertemuan 14): 30%</li>
+                <li>Sistem Informasi Sekolah CRUD (Pertemuan 15): 40%</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>J. Format Pengumpulan Akhir</h3>
+            <ol>
+                <li>Nama folder project: <code>ujian15_nama_kelas</code>.</li>
+                <li>Sertakan file SQL export database.</li>
+                <li>Pastikan project bisa dijalankan di localhost penguji.</li>
+            </ol>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_14.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 14)</a>
+            <a href="index.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Selesai dan Kembali ke Beranda</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

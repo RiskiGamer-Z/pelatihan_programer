@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 10 - Penyempurnaan Pendataan Siswa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 2: Backend Logic</span>
+            <h2>Pertemuan 10: Penyempurnaan Pendataan Siswa Sederhana</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Melanjutkan project pertemuan 9 hingga siap dijadikan output ujian.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Pembelajaran</h3>
+            <ul>
+                <li>Menyempurnakan project pendataan siswa dari Pertemuan 9.</li>
+                <li>Menambahkan fitur hapus data per baris.</li>
+                <li>Menambahkan validasi input yang lebih baik.</li>
+                <li>Merapikan tampilan agar siap untuk Output 2.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Scope Penyempurnaan Hari Ini</h3>
+            <ol>
+                <li>Tambah fitur hapus data.</li>
+                <li>Tambah validasi lebih ketat (nama minimal 3 karakter).</li>
+                <li>Tambah pesan sukses/gagal saat submit.</li>
+                <li>Rapikan tampilan tabel agar mudah dibaca.</li>
+            </ol>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Alur Penyempurnaan Project</h3>
+            <ul>
+                <li>Data ditambah dari form, kemudian disimpan ke session.</li>
+                <li>Setiap baris data diberi tombol hapus.</li>
+                <li>Jika tombol hapus ditekan, data di indeks terkait dihapus.</li>
+                <li>Tabel diperbarui setelah tambah/hapus data.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Konsep Inti yang Dipakai</h3>
+
+            <h4>1. Hapus data per indeks array session</h4>
+            <p>Setiap data di session punya indeks. Kita kirim indeks itu melalui form untuk menghapus baris tertentu.</p>
+            <pre><code>&lt;?php
+if (isset($_POST['hapus'])) {
+    $index = (int)($_POST['index'] ?? -1);
+    if (isset($_SESSION['data_siswa'][$index])) {
+        unset($_SESSION['data_siswa'][$index]);
+        $_SESSION['data_siswa'] = array_values($_SESSION['data_siswa']);
+    }
+}
+?&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>isset($_POST['hapus'])</code> mengecek apakah tombol hapus ditekan.</li>
+                <li><code>$index = (int)($_POST['index'] ?? -1)</code> mengambil posisi data yang akan dihapus.</li>
+                <li><code>isset($_SESSION['data_siswa'][$index])</code> memastikan data pada indeks itu benar-benar ada.</li>
+                <li><code>unset(...)</code> menghapus data pada indeks tersebut dari array session.</li>
+                <li><code>array_values(...)</code> merapikan ulang index array agar urut dari 0 lagi.</li>
+            </ul>
+
+            <h4>2. Validasi sederhana sebelum simpan</h4>
+            <pre><code>&lt;?php
+$nama = trim($_POST['nama'] ?? '');
+if (strlen($nama) &lt; 3) {
+    $pesanError = 'Nama minimal 3 karakter.';
+}
+?&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>trim()</code> menghapus spasi di depan dan belakang input.</li>
+                <li><code>$_POST['nama'] ?? ''</code> memberi nilai kosong jika field belum ada.</li>
+                <li><code>strlen($nama) &lt; 3</code> memeriksa apakah nama terlalu pendek.</li>
+                <li><code>$pesanError</code> dipakai untuk menampilkan pesan kesalahan ke user.</li>
+            </ul>
+
+            <h4>3. Tabel + tombol aksi di setiap baris</h4>
+            <pre><code>&lt;?php foreach ($_SESSION['data_siswa'] as $index =&gt; $siswa): ?&gt;
+&lt;tr&gt;
+    &lt;td&gt;&lt;?php echo $index + 1; ?&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;?php echo $siswa['nama']; ?&gt;&lt;/td&gt;
+    &lt;td&gt;
+        &lt;form method="POST" action=""&gt;
+            &lt;input type="hidden" name="index" value="&lt;?php echo $index; ?&gt;"&gt;
+            &lt;button type="submit" name="hapus"&gt;Hapus&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;?php endforeach; ?&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>foreach</code> membaca semua data siswa satu per satu.</li>
+                <li><code>$index + 1</code> menampilkan nomor urut mulai dari 1.</li>
+                <li><code>&lt;form method="POST"&gt;</code> dipakai agar setiap baris bisa punya tombol hapus sendiri.</li>
+                <li><code>&lt;input type="hidden" name="index" ...&gt;</code> menyimpan posisi data yang akan dihapus.</li>
+                <li>Tombol <code>Hapus</code> mengirim request ke server untuk menghapus data itu saja.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Contoh Implementasi Lengkap</h3>
+            <h4>Contoh Full File: Tambah + Hapus + Validasi</h4>
+            <pre><code>&lt;?php
+session_start();
+
+if (!isset($_SESSION['data_siswa'])) {
+    $_SESSION['data_siswa'] = [];
+}
+
+$pesan = '';
+
+if (isset($_POST['simpan'])) {
+    $nama = trim($_POST['nama'] ?? '');
+    $kelas = trim($_POST['kelas'] ?? '');
+    $jurusan = trim($_POST['jurusan'] ?? '');
+
+    if (strlen($nama) &lt; 3 || $kelas === '' || $jurusan === '') {
+        $pesan = 'Data gagal disimpan. Cek kembali input Anda.';
+    } else {
+        $_SESSION['data_siswa'][] = [
+            'nama' =&gt; htmlspecialchars($nama),
+            'kelas' =&gt; htmlspecialchars($kelas),
+            'jurusan' =&gt; htmlspecialchars($jurusan)
+        ];
+        $pesan = 'Data berhasil ditambahkan.';
+    }
+}
+
+if (isset($_POST['hapus'])) {
+    $index = (int)($_POST['index'] ?? -1);
+    if (isset($_SESSION['data_siswa'][$index])) {
+        unset($_SESSION['data_siswa'][$index]);
+        $_SESSION['data_siswa'] = array_values($_SESSION['data_siswa']);
+        $pesan = 'Data berhasil dihapus.';
+    }
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Penyempurnaan Pendataan Siswa&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;Pendataan Siswa - Versi Penyempurnaan&lt;/h2&gt;
+    &lt;p&gt;&lt;?php echo $pesan; ?&gt;&lt;/p&gt;
+
+    &lt;form method="POST" action=""&gt;
+        &lt;input type="text" name="nama" placeholder="Nama"&gt;
+        &lt;input type="text" name="kelas" placeholder="Kelas"&gt;
+        &lt;input type="text" name="jurusan" placeholder="Jurusan"&gt;
+        &lt;button type="submit" name="simpan"&gt;Simpan&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;table border="1" cellpadding="8" cellspacing="0"&gt;
+        &lt;tr&gt;
+            &lt;th&gt;No&lt;/th&gt;
+            &lt;th&gt;Nama&lt;/th&gt;
+            &lt;th&gt;Kelas&lt;/th&gt;
+            &lt;th&gt;Jurusan&lt;/th&gt;
+            &lt;th&gt;Aksi&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;?php foreach ($_SESSION['data_siswa'] as $index =&gt; $siswa): ?&gt;
+            &lt;tr&gt;
+                &lt;td&gt;&lt;?php echo $index + 1; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $siswa['nama']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $siswa['kelas']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;&lt;?php echo $siswa['jurusan']; ?&gt;&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;form method="POST" action=""&gt;
+                        &lt;input type="hidden" name="index" value="&lt;?php echo $index; ?&gt;"&gt;
+                        &lt;button type="submit" name="hapus"&gt;Hapus&lt;/button&gt;
+                    &lt;/form&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;?php endforeach; ?&gt;
+    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li><code>session_start()</code> mengaktifkan session agar data bisa disimpan sementara.</li>
+                <li>Blok <code>if (!isset(...))</code> membuat array kosong saat data belum ada.</li>
+                <li>Blok <code>if (isset($_POST['simpan']))</code> memproses penambahan data baru.</li>
+                <li>Validasi memastikan nama, kelas, dan jurusan terisi sebelum disimpan.</li>
+                <li>Bagian <code>hapus</code> menghapus data berdasarkan index lalu merapikan ulang array.</li>
+                <li>Bagian HTML menampilkan form input dan tabel data pada satu halaman.</li>
+            </ul>
+
+            <h4>Contoh Full File + CSS + Sedikit JavaScript</h4>
+            <pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['siswa'])) $_SESSION['siswa'] = [];
+
+if (isset($_POST['tambah'])) {
+    $nama = trim($_POST['nama'] ?? '');
+    if (strlen($nama) &gt;= 3) {
+        $_SESSION['siswa'][] = htmlspecialchars($nama);
+    }
+}
+
+if (isset($_POST['hapus_semua'])) {
+    $_SESSION['siswa'] = [];
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Contoh CSS + JS&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial, sans-serif; background: #f4f6fb; padding: 20px; }
+        .box { max-width: 560px; margin: auto; background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+        .row { display: flex; gap: 8px; }
+        input { flex: 1; padding: 8px; border: 1px solid #d0d7e2; border-radius: 8px; }
+        button { padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; color: #fff; background: #2563eb; }
+        .danger { background: #dc2626; margin-top: 8px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="box"&gt;
+        &lt;h3&gt;Pendataan Siswa (Ringkas)&lt;/h3&gt;
+        &lt;form method="POST" class="row"&gt;
+            &lt;input type="text" name="nama" placeholder="Nama minimal 3 karakter"&gt;
+            &lt;button type="submit" name="tambah"&gt;Tambah&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;form method="POST" onsubmit="return confirm('Hapus semua data?');"&gt;
+            &lt;button type="submit" name="hapus_semua" class="danger"&gt;Hapus Semua&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;ul id="listSiswa"&gt;
+            &lt;?php foreach ($_SESSION['siswa'] as $nama): ?&gt;
+                &lt;li&gt;&lt;?php echo $nama; ?&gt;&lt;/li&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        const total = &lt;?php echo count($_SESSION['siswa']); ?&gt;;
+        if (total === 0) {
+            document.getElementById('listSiswa').innerHTML = '&lt;li&gt;Belum ada data siswa.&lt;/li&gt;';
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Penjelasan kode:</strong></p>
+            <ul>
+                <li>Bagian <code>&lt;style&gt;</code> mengatur tampilan card, input, tombol, dan warna halaman.</li>
+                <li>Class <code>.row</code> membuat form input dan tombol sejajar secara horizontal.</li>
+                <li><code>onsubmit="return confirm(...)"</code> memunculkan dialog konfirmasi sebelum data dihapus.</li>
+                <li>Script <code>const total = ...</code> mengambil jumlah data dari PHP ke JavaScript.</li>
+                <li>Jika data masih kosong, JavaScript menampilkan teks <code>Belum ada data siswa.</code>.</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>F. Latihan Praktik (4 Soal Sederhana)</h3>
+            <ol>
+                <li><strong>Latihan 1:</strong> Tambahkan fitur hapus data per baris.</li>
+                <li><strong>Latihan 2:</strong> Tambahkan field email dan tampilkan di tabel.</li>
+                <li><strong>Latihan 3:</strong> Tambahkan validasi nama minimal 3 karakter.</li>
+                <li><strong>Latihan 4:</strong> Buat versi rapi dengan CSS dan konfirmasi hapus menggunakan JavaScript.</li>
+            </ol>
+
+            <p><a href="kunci_jawaban/pertemuan_10/latihan_1_soal.php" target="_blank">📖 Latihan 1 Soal</a> | <a href="kunci_jawaban/pertemuan_10/latihan_1_kunci.php" target="_blank">✅ Kunci 1</a></p>
+            <p><a href="kunci_jawaban/pertemuan_10/latihan_2_soal.php" target="_blank">📖 Latihan 2 Soal</a> | <a href="kunci_jawaban/pertemuan_10/latihan_2_kunci.php" target="_blank">✅ Kunci 2</a></p>
+            <p><a href="kunci_jawaban/pertemuan_10/latihan_3_soal.php" target="_blank">📖 Latihan 3 Soal</a> | <a href="kunci_jawaban/pertemuan_10/latihan_3_kunci.php" target="_blank">✅ Kunci 3</a></p>
+            <p><a href="kunci_jawaban/pertemuan_10/latihan_4_soal.php" target="_blank">📖 Latihan 4 Soal</a> | <a href="kunci_jawaban/pertemuan_10/latihan_4_kunci.php" target="_blank">✅ Kunci 4</a></p>
+        </div>
+
+        <div class="quest-box">
+            <h3>G. Checklist Siap Ujian Output 2</h3>
+            <span class="quest-level">WAJIB TERPENUHI</span>
+            <ul>
+                <li>Form input berfungsi.</li>
+                <li>Data tersimpan dan tampil.</li>
+                <li>Fitur hapus aktif.</li>
+                <li>Validasi input berjalan.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>H. Checklist Sebelum Lanjut Pertemuan 11</h3>
+            <ul>
+                <li>Fitur tambah data stabil.</li>
+                <li>Fitur hapus per baris sudah berjalan.</li>
+                <li>Tabel tampil rapi dan mudah dibaca.</li>
+                <li>Siap pindah ke database MySQL di Pertemuan 11.</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>I. Memecah PHP, CSS, dan JS dalam Satu Folder</h3>
+            <p>Agar project lebih rapi, file PHP, CSS, dan JavaScript sebaiknya dipisahkan tetapi tetap berada di satu folder project yang sama.</p>
+
+            <p><strong>Contoh struktur folder:</strong></p>
+            <pre><code>pendataan_siswa/
+├── index.php
+├── style.css
+└── script.js</code></pre>
+
+            <p><strong>Penjelasan struktur:</strong></p>
+            <ul>
+                <li><code>index.php</code> berisi logika PHP dan tampilan HTML utama.</li>
+                <li><code>style.css</code> berisi semua pengaturan tampilan seperti warna, jarak, dan layout.</li>
+                <li><code>script.js</code> berisi JavaScript kecil seperti konfirmasi hapus atau validasi ringan.</li>
+            </ul>
+
+            <p><strong>Cara menghubungkan file:</strong></p>
+            <pre><code>&lt;link rel="stylesheet" href="style.css"&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+
+            <p><strong>Kenapa dipisah?</strong></p>
+            <ul>
+                <li>Lebih mudah dibaca dan dirawat.</li>
+                <li>Kalau ada perubahan tampilan, cukup edit file CSS.</li>
+                <li>Kalau ada perubahan interaksi, cukup edit file JS.</li>
+                <li>File PHP jadi fokus ke proses data dan logic.</li>
+            </ul>
+
+            <p>Untuk project pendataan siswa, pola ini sangat membantu saat project mulai membesar menjelang Output 2.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>J. Contoh Implementasi yang Sudah Dipecah</h3>
+            <p>Di bawah ini contoh project kecil yang sudah dipisah menjadi tiga file. Ini adalah pola yang lebih rapi dibanding menaruh semua kode dalam satu file.</p>
+
+            <h4>1. index.php</h4>
+            <pre><code>&lt;?php
+session_start();
+
+if (!isset($_SESSION['data_siswa'])) {
+    $_SESSION['data_siswa'] = [];
+}
+
+if (isset($_POST['simpan'])) {
+    $nama = trim($_POST['nama'] ?? '');
+    $kelas = trim($_POST['kelas'] ?? '');
+    $jurusan = trim($_POST['jurusan'] ?? '');
+
+    if ($nama !== '' && $kelas !== '' && $jurusan !== '') {
+        $_SESSION['data_siswa'][] = [
+            'nama' =&gt; htmlspecialchars($nama),
+            'kelas' =&gt; htmlspecialchars($kelas),
+            'jurusan' =&gt; htmlspecialchars($jurusan)
+        ];
+    }
+}
+
+if (isset($_POST['hapus_semua'])) {
+    $_SESSION['data_siswa'] = [];
+}
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Pendataan Siswa&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="wrapper"&gt;
+        &lt;h1&gt;Pendataan Siswa&lt;/h1&gt;
+
+        &lt;form method="POST" action="" class="form-box"&gt;
+            &lt;input type="text" name="nama" placeholder="Nama siswa"&gt;
+            &lt;input type="text" name="kelas" placeholder="Kelas"&gt;
+            &lt;input type="text" name="jurusan" placeholder="Jurusan"&gt;
+            &lt;button type="submit" name="simpan"&gt;Simpan&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;form method="POST" action="" onsubmit="return konfirmasiHapus();"&gt;
+            &lt;button type="submit" name="hapus_semua" class="btn-danger"&gt;Hapus Semua&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;ul id="daftarSiswa"&gt;
+            &lt;?php foreach ($_SESSION['data_siswa'] as $siswa): ?&gt;
+                &lt;li&gt;
+                    &lt;?php echo $siswa['nama']; ?&gt; - 
+                    &lt;?php echo $siswa['kelas']; ?&gt; - 
+                    &lt;?php echo $siswa['jurusan']; ?&gt;
+                &lt;/li&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Penjelasan index.php:</strong></p>
+            <ul>
+                <li>Bagian PHP di atas hanya mengurus data: session, simpan, dan hapus semua.</li>
+                <li>Bagian HTML menampilkan form, tombol, dan daftar siswa.</li>
+                <li><code>style.css</code> dipanggil lewat tag <code>&lt;link&gt;</code>.</li>
+                <li><code>script.js</code> dipanggil di bagian bawah agar halaman lebih cepat tampil.</li>
+            </ul>
+
+            <h4>2. style.css</h4>
+            <pre><code>body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    margin: 0;
+    padding: 20px;
+}
+
+.wrapper {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #d0d7e2;
+    border-radius: 8px;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    background: #2563eb;
+}
+
+.btn-danger {
+    background: #dc2626;
+    margin-top: 8px;
+}
+
+ul {
+    margin-top: 16px;
+}
+
+li {
+    padding: 6px 0;
+}</code></pre>
+            <p><strong>Penjelasan style.css:</strong></p>
+            <ul>
+                <li>Semua pengaturan tampilan dipindah ke file CSS agar HTML tetap bersih.</li>
+                <li><code>.wrapper</code> membuat card utama berada di tengah halaman.</li>
+                <li><code>.form-box</code> menyusun input sejajar dan rapi.</li>
+                <li><code>.btn-danger</code> memberi warna merah untuk tombol hapus semua.</li>
+            </ul>
+
+            <h4>3. script.js</h4>
+            <pre><code>function konfirmasiHapus() {
+    return confirm('Yakin ingin menghapus semua data?');
+}
+
+const daftar = document.getElementById('daftarSiswa');
+if (daftar && daftar.children.length === 0) {
+    daftar.innerHTML = '&lt;li&gt;Belum ada data siswa.&lt;/li&gt;';
+}</code></pre>
+            <p><strong>Penjelasan script.js:</strong></p>
+            <ul>
+                <li><code>konfirmasiHapus()</code> menampilkan dialog sebelum data dihapus.</li>
+                <li><code>document.getElementById()</code> mengambil elemen daftar siswa dari HTML.</li>
+                <li>Jika daftar kosong, JavaScript menampilkan teks informasi agar halaman tidak terlihat kosong.</li>
+            </ul>
+
+            <p>Contoh ini cocok dipakai sebagai template saat project mulai berkembang dan ingin dipisah menjadi file yang lebih rapi.</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_9.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 9)</a>
+            <a href="pertemuan_11.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 11</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>

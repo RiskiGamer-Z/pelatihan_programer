@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 1 - Konsep Dasar Web & HTML</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Sidebar akan di-inject oleh nav.js -->
+    
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 1: Front-End UI</span>
+            <h2>Pertemuan 1: Konsep Dasar Web & Pengenalan HTML</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Memahami internet, protokol web, dan struktur rangka sebuah website.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Dasar-Dasar Website</h3>
+            <p><strong>Internet</strong> merupakan "kependekan dari kata internetwork", yang berarti rangkaian komputer yang terhubung menjadi beberapa rangkaian jaringan global menggunakan TCP/IP sebagai protokol. Secara umum internet adalah pertukaran informasi bebas tanpa batasan.</p>
+            
+            <h4>Istilah Penting di Internet</h4>
+            <ul>
+                <li><strong>WWW (World Wide Web):</strong> Kumpulan web server diseluruh dunia yang melayani data dan informasi.</li>
+                <li><strong>Website/Situs Web:</strong> Alamat di WWW yang memiliki kumpulan halaman web.</li>
+                <li><strong>Browser:</strong> Aplikasi untuk berselancar di dunia internet (Cth: Chrome, Edge).</li>
+                <li><strong>URL (Uniform Resource Locator):</strong> Alamat spesifik sebuah halaman. (Cth: http://google.com).</li>
+                <li><strong>HTTP/HTTPS:</strong> Protokol identifikasi lokasi web tempat data ditransfer.</li>
+            </ul>
+
+            <div class="alert alert-info">
+                <strong>📝 Web Server:</strong> Perangkat lunak yang merespons permintaan browser (HTTP). Contoh terkenalnya adalah Apache (yang tergabung dalam aplikasi <strong>XAMPP</strong>).
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Pengertian HTML</h3>
+            <p><strong>HTML (Hypertext Markup Language)</strong> adalah bahasa *markup* standar untuk menampilkan konten di web. HTML bukanlah "bahasa pemrograman logika", melainkan bahasa markup struktural untuk memberitahu browser bagaimana menampilkan teks atau gambar.</p>
+            <p>Sebuah file HTML selalu berisi elemen tag yang diawali lambang <code>&lt;</code> dan diakhiri <code>&gt;</code>.</p>
+
+            <h4>Struktur Dasar HTML</h4>
+            <p>Struktur kerangka dasar wajib dari halaman website adalah seperti ini:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Judul Web Anda&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    Konten atau isi website ditampilkan di area BODY ini.
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <ul>
+                <li><code>&lt;html&gt;</code>: Tag pembuka halaman web keseluruhan.</li>
+                <li><code>&lt;head&gt;</code>: Bagian "kepala", tempat Anda menaruh judul dan konfigurasi (tidak tampil langsung di layar putih browser).</li>
+                <li><code>&lt;title&gt;</code>: Judul halaman yang akan muncul di tab browser.</li>
+                <li><code>&lt;body&gt;</code>: Bagian "badan", tempat semua foto, teks, dan tombol utama Anda diletakkan!</li>
+            </ul>
+
+            <h4>Tag-Tag HTML Mandiri yang Sering Dipakai</h4>
+            <p>Kebanyakan tag perlu memiliki pasangan penutup, contoh: <code>&lt;h1&gt;</code> ditutup dengan <code>&lt;/h1&gt;</code>. Namun ada juga yang berdiri sendiri:</p>
+            <ul>
+                <li><code>&lt;br&gt;</code>: Baris baru (Enter / Line Break).</li>
+                <li><code>&lt;hr&gt;</code>: Garis datar pembatas.</li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h3>💻 Praktik & Tugas!</h3>
+            <p>Sekarang uji pemahaman Anda. Praktikkan langsung instruksi di bawah ini dengan menyalakan Text Editor (Sublime / VS Code):</p>
+            <ol>
+                <li>Buat file baru di editor Anda.</li>
+                <li>Ketik kode HTML struktur dasar di atas, lalu tambahkan "Selamat Datang di Website Saya" di dalam bagian <code>&lt;body&gt;</code>.</li>
+                <li>Gunakan tag <code>&lt;br&gt;</code> untuk memisahkan baris paragraf kedua Anda.</li>
+                <li><strong>Simpan file (Save As)</strong> dengan nama <code>contoh1.html</code> di desktop Anda. Pastikan pada "Save as type" dipilih "All Files".</li>
+                <li>Buka file tersebut dengan mengeklik ganda file <code>contoh1.html</code>. Munculkah tulisan tersebut di browser Edge/Chrome Anda?</li>
+            </ol>
+            <p style="margin-top: 16px; font-weight: 600;">Jika berhasil, selamat! Anda sudah menulis baris kode Website pertama Anda! 🎉 Lanjut ke Pertemuan 2 untuk elemen visual lainnya.</p>
+        </div>
+
+        <div class="quest-box">
+            <h3>🧩 Problem Solving: Analisis Error HTML</h3>
+            <span class="quest-level">LEVEL MENENGAH - LANJUTAN</span>
+            <p>Seorang teman Anda yang baru belajar memberikan kode HTML ini kepada Anda. Dia mengeluh "Kenapa judul teksnya menyatu dengan teks badannya padahal sudah saya beri Enter?"</p>
+            <pre><code>&lt;html&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Profil Perusahaan Kami
+    Selamat datang di CV. Maju Bersama. Kami adalah perusahaan tambang.
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Tugas Anda:</strong> Berdasarkan materi Pertemuan 1, sebutkan 2 kesalahan fatal dari kode teman Anda tersebut, lalu ketik ulang kode yang benar di text editor Anda!</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <div></div> <!-- Spacer -->
+            <a href="pertemuan_2.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 2 ➡️</a>
+        </div>
+    </main>
+
+    <script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertemuan 8 - Fungsi PHP dan Form Processing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="header-meeting">
+            <span>Fase 2: Backend Logic</span>
+            <h2>Pertemuan 8: Fungsi PHP dan Form Processing (GET/POST)</h2>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Materi digabung agar siswa siap membangun aplikasi: fungsi dipakai untuk memproses data form.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>A. Tujuan Pembelajaran</h3>
+            <ul>
+                <li>Memahami konsep dan manfaat fungsi dalam PHP</li>
+                <li>Dapat membuat dan memanggil fungsi dengan parameter</li>
+                <li>Menguasai konsep return value dalam fungsi</li>
+                <li>Memahami scope variabel (global, local, super global)</li>
+                <li>Dapat membedakan metode GET dan POST</li>
+                <li>Dapat memproses data form menggunakan $_GET dan $_POST</li>
+                <li>Menerapkan form processing dalam aplikasi sederhana</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>B. Konsep Dasar Fungsi PHP</h3>
+            <p><strong>Fungsi</strong> adalah blok kode yang dirancang untuk melakukan tugas tertentu. Fungsi dapat dipanggil berkali-kali dalam program untuk mengurangi pengulangan kode (DRY - Don't Repeat Yourself).</p>
+            
+            <p><strong>Manfaat menggunakan fungsi:</strong></p>
+            <ul>
+                <li>Mengurangi duplikasi kode</li>
+                <li>Membuat kode lebih terorganisir dan mudah dibaca</li>
+                <li>Mempermudah debugging (perbaikan kesalahan)</li>
+                <li>Memungkinkan reusable code (kode yang dapat digunakan kembali)</li>
+                <li>Mempercepat development (pengembangan)</li>
+            </ul>
+
+            <h4>Struktur Dasar Fungsi:</h4>
+            <ul>
+                <li><code>function</code> - keyword untuk mendefinisikan fungsi</li>
+                <li><code>namaFungsi</code> - nama yang diberikan pada fungsi</li>
+                <li><code>parameter</code> - input yang diterima fungsi (opsional)</li>
+                <li><code>return</code> - nilai yang dikembalikan oleh fungsi (opsional)</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>C. Jenis-Jenis Fungsi PHP</h3>
+
+            <h4>1. Fungsi Tanpa Parameter dan Tanpa Return</h4>
+            <p>Fungsi paling sederhana yang hanya menjalankan perintah tanpa menerima input atau mengembalikan nilai.</p>
+            <pre><code>&lt;?php
+function salam() {
+    echo "Selamat datang di Pelatihan Programmer!";
+}
+
+// Memanggil fungsi
+salam(); // Output: Selamat datang di Pelatihan Programmer!
+?&gt;</code></pre>
+
+            <h4>2. Fungsi Dengan Parameter</h4>
+            <p>Fungsi yang menerima input (parameter) untuk memproses data sesuai kebutuhan.</p>
+            <pre><code>&lt;?php
+function sapaNama($nama, $usia) {
+    echo "Halo, nama saya " . $nama;
+    echo " dan umur saya " . $usia . " tahun";
+}
+
+// Memanggil fungsi dengan parameter
+sapaNama("Budi", 25);      // Output: Halo, nama saya Budi dan umur saya 25 tahun
+sapaNama("Siti", 22);      // Output: Halo, nama saya Siti dan umur saya 22 tahun
+?&gt;</code></pre>
+
+            <h4>3. Fungsi Dengan Return Value</h4>
+            <p>Fungsi yang mengembalikan nilai hasil proses untuk digunakan di tempat lain dalam program.</p>
+            <pre><code>&lt;?php
+function hitungJumlah($a, $b) {
+    $hasil = $a + $b;
+    return $hasil;
+}
+
+// Memanggil fungsi dan menyimpan return value
+$total = hitungJumlah(10, 15);
+echo "Total: " . $total;  // Output: Total: 25
+
+// Atau langsung menampilkan
+echo hitungJumlah(5, 3);  // Output: 8
+?&gt;</code></pre>
+
+            <h4>4. Fungsi Dengan Parameter dan Return</h4>
+            <p>Kombinasi parameter dan return value untuk membuat fungsi yang fleksibel dan powerful.</p>
+            <pre><code>&lt;?php
+function hitungLuasPersegiPanjang($panjang, $lebar) {
+    $luas = $panjang * $lebar;
+    return $luas;
+}
+
+function hitungKelilingPersegiPanjang($panjang, $lebar) {
+    $keliling = 2 * ($panjang + $lebar);
+    return $keliling;
+}
+
+// Menggunakan fungsi
+$luasPersegiPanjang = hitungLuasPersegiPanjang(10, 5);    // 50
+$kelilingPersegiPanjang = hitungKelilingPersegiPanjang(10, 5); // 30
+
+echo "Luas: " . $luasPersegiPanjang . " cm²\n";
+echo "Keliling: " . $kelilingPersegiPanjang . " cm";
+?&gt;</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>D. Scope Variabel dalam Fungsi</h3>
+            <p><strong>Scope</strong> menentukan bagian mana dari program yang dapat mengakses suatu variabel.</p>
+
+            <h4>1. Local Scope</h4>
+            <p>Variabel yang dideklarasikan di dalam fungsi hanya dapat diakses di dalam fungsi tersebut.</p>
+            <pre><code>&lt;?php
+function testLocal() {
+    $nama = "Budi";
+    echo $nama;  // Output: Budi (bisa diakses di dalam fungsi)
+}
+
+testLocal();
+echo $nama;  // ERROR! Undefined variable. $nama tidak bisa diakses di sini
+?&gt;</code></pre>
+
+            <h4>2. Global Scope</h4>
+            <p>Variabel yang dideklarasikan di luar fungsi memiliki global scope, tetapi untuk mengaksesnya dari dalam fungsi, harus menggunakan keyword <code>global</code>.</p>
+            <pre><code>&lt;?php
+$nama = "Siti";  // Global scope
+
+function testGlobal() {
+    global $nama;  // Deklarasi variabel global di dalam fungsi
+    echo $nama;    // Output: Siti (sekarang bisa diakses)
+}
+
+testGlobal();
+echo $nama;  // Output: Siti (bisa diakses dari luar fungsi)
+?&gt;</code></pre>
+
+            <h4>3. Super Global Variables</h4>
+            <p>Variabel super global adalah variabel yang sudah dideklarasikan oleh PHP dan dapat diakses di mana saja tanpa perlu keyword <code>global</code>. Contoh: <code>$_GET</code>, <code>$_POST</code>, <code>$_SERVER</code>, <code>$_FILES</code>, dll.</p>
+            <pre><code>&lt;?php
+function testSuperglobal() {
+    // Super global variables bisa diakses tanpa keyword global
+    echo $_SERVER['PHP_SELF'];   // Nama file PHP yang sedang dijalankan
+    echo $_SERVER['HTTP_HOST'];  // Nama host
+}
+
+testSuperglobal();
+?&gt;</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>E. Form Processing: Metode GET dan POST</h3>
+
+            <h4>Perbedaan GET dan POST</h4>
+            <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+                <tr style="background-color: #f2f2f2;">
+                    <th style="text-align: left; padding: 10px;">Aspek</th>
+                    <th style="text-align: left; padding: 10px;">GET</th>
+                    <th style="text-align: left; padding: 10px;">POST</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Visibilitas Data</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Terlihat di URL</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Disembunyikan (di header HTTP)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Keamanan</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Kurang aman (data bisa dilihat)</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Lebih aman (data tidak terlihat)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Ukuran Data</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Terbatas (~2000 karakter)</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Tidak terbatas</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Kegunaan</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Pencarian, filter, parameter halaman</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">Login, upload file, data sensitif</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;"><strong>Caching</strong></td>
+                    <td style="padding: 10px;">Bisa di-cache oleh browser</td>
+                    <td style="padding: 10px;">Tidak di-cache</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Fungsi-Fungsi Penting untuk Form Processing</h3>
+
+            <h4>1. isset() - Mengecek Apakah Variabel Ada</h4>
+            <p>Digunakan untuk memastikan data dari form sudah dikirim sebelum diproses.</p>
+            <pre><code>&lt;?php
+if (isset($_GET['nama'])) {
+    echo "Data nama diterima: " . $_GET['nama'];
+} else {
+    echo "Data nama belum dikirim";
+}
+?&gt;</code></pre>
+
+            <h4>2. htmlspecialchars() - Mengamankan Data Output</h4>
+            <p>Mengkonversi karakter khusus menjadi HTML entities untuk mencegah XSS attack (keamanan).</p>
+            <pre><code>&lt;?php
+// Tanpa htmlspecialchars() - BERBAHAYA
+$nama = "&lt;script&gt;alert('Hacked!')&lt;/script&gt;";
+echo $nama;  // Script akan dijalankan!
+
+// Dengan htmlspecialchars() - AMAN
+echo htmlspecialchars($nama);  // Script ditampilkan sebagai text biasa
+?&gt;</code></pre>
+
+            <h4>3. empty() - Mengecek Apakah Variabel Kosong</h4>
+            <p>Mengecek apakah variabel kosong, belum diset, atau bernilai 0/false.</p>
+            <pre><code>&lt;?php
+$nama = "";
+
+if (empty($nama)) {
+    echo "Nama tidak boleh kosong!";
+} else {
+    echo "Nama: " . $nama;
+}
+?&gt;</code></pre>
+
+            <h4>4. $_SERVER['REQUEST_METHOD'] - Mengecek Metode Form</h4>
+            <p>Mengecek apakah form disubmit dengan GET atau POST.</p>
+            <pre><code>&lt;?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Proses data POST
+    echo "Form disubmit dengan POST";
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Proses data GET
+    echo "Form disubmit dengan GET";
+}
+?&gt;</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>G. Contoh Form Processing Lengkap</h3>
+
+            <h4>Contoh 1: Form Pendaftaran Siswa (POST)</h4>
+            <pre><code>&lt;?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nama = htmlspecialchars($_POST['nama'] ?? '');
+    $email = htmlspecialchars($_POST['email'] ?? '');
+    
+    if (!empty($nama) && !empty($email)) {
+        echo "Pendaftaran berhasil! Nama Anda: " . $nama;
+    } else {
+        echo "Semua field harus diisi!";
+    }
+}
+?&gt;
+
+&lt;form method="POST" action=""&gt;
+    &lt;input type="text" name="nama" placeholder="Nama" required&gt;
+    &lt;input type="email" name="email" placeholder="Email" required&gt;
+    &lt;button type="submit"&gt;Daftar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+            <h4>Contoh 2: Kalkulator Sederhana (GET)</h4>
+            <pre><code>&lt;?php
+$hasil = "";
+
+if (isset($_GET['angka1']) && isset($_GET['angka2']) && isset($_GET['operasi'])) {
+    $angka1 = floatval($_GET['angka1']);
+    $angka2 = floatval($_GET['angka2']);
+    $operasi = $_GET['operasi'];
+    
+    if ($operasi === 'tambah') $hasil = $angka1 + $angka2;
+    elseif ($operasi === 'kurang') $hasil = $angka1 - $angka2;
+    elseif ($operasi === 'kali') $hasil = $angka1 * $angka2;
+    elseif ($operasi === 'bagi') $hasil = ($angka2 != 0) ? $angka1 / $angka2 : "Error";
+}
+?&gt;
+
+&lt;form method="GET" action=""&gt;
+    &lt;input type="number" name="angka1" placeholder="Angka 1" required&gt;
+    &lt;select name="operasi" required&gt;
+        &lt;option value="tambah"&gt;Tambah (+)&lt;/option&gt;
+        &lt;option value="kurang"&gt;Kurang (-)&lt;/option&gt;
+        &lt;option value="kali"&gt;Kali (*)&lt;/option&gt;
+        &lt;option value="bagi"&gt;Bagi (/)&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;input type="number" name="angka2" placeholder="Angka 2" required&gt;
+    &lt;button type="submit"&gt;Hitung&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>H. Latihan Praktik</h3>
+
+            <p><strong>📝 Latihan 1: Fungsi Salam Nama</strong></p>
+            <p>Buat fungsi sederhana untuk menampilkan salam sesuai nama yang diinput.</p>
+            <p><a href="kunci_jawaban/pertemuan_8/latihan_1_soal.php" target="_blank">📖 Lihat Soal</a> | <a href="kunci_jawaban/pertemuan_8/latihan_1_kunci.php" target="_blank">✅ Lihat Kunci</a></p>
+
+            <p><strong>📝 Latihan 2: Fungsi Tambah Dua Angka</strong></p>
+            <p>Buat fungsi untuk menjumlahkan 2 angka dari form.</p>
+            <p><a href="kunci_jawaban/pertemuan_8/latihan_2_soal.php" target="_blank">📖 Lihat Soal</a> | <a href="kunci_jawaban/pertemuan_8/latihan_2_kunci.php" target="_blank">✅ Lihat Kunci</a></p>
+
+            <p><strong>📝 Latihan 3: Form Biodata Sederhana</strong></p>
+            <p>Buat form untuk menampilkan nama dan umur yang diinput user.</p>
+            <p><a href="kunci_jawaban/pertemuan_8/latihan_3_soal.php" target="_blank">📖 Lihat Soal</a> | <a href="kunci_jawaban/pertemuan_8/latihan_3_kunci.php" target="_blank">✅ Lihat Kunci</a></p>
+
+            <p><strong>📝 Latihan 4: Login Sederhana</strong></p>
+            <p>Buat login sederhana dengan username dan password yang sudah ditentukan.</p>
+            <p><a href="kunci_jawaban/pertemuan_8/latihan_4_soal.php" target="_blank">📖 Lihat Soal</a> | <a href="kunci_jawaban/pertemuan_8/latihan_4_kunci.php" target="_blank">✅ Lihat Kunci</a></p>
+        </div>
+
+        <div class="content-box">
+            <h3>I. Kesimpulan dan Tips</h3>
+
+            <h4>Poin Kunci:</h4>
+            <ul>
+                <li><strong>Fungsi</strong> mengurangi duplikasi dan membuat code terstruktur</li>
+                <li><strong>Parameter</strong> memungkinkan input yang berbeda-beda</li>
+                <li><strong>Return value</strong> mengembalikan hasil untuk digunakan di tempat lain</li>
+                <li><strong>Scope variabel</strong> penting untuk akses variabel yang benar</li>
+                <li><strong>GET</strong> untuk data non-sensitif (terlihat di URL)</li>
+                <li><strong>POST</strong> untuk data sensitif (tersembunyi)</li>
+                <li><strong>Validasi dan sanitasi</strong> adalah keharusan untuk keamanan</li>
+            </ul>
+
+            <h4>Tips Pengembangan:</h4>
+            <ul>
+                <li>Buat nama fungsi yang deskriptif dan jelas</li>
+                <li>Gunakan comments untuk logika yang kompleks</li>
+                <li>Test dengan berbagai macam input</li>
+                <li>Selalu gunakan htmlspecialchars() pada output</li>
+                <li>Validasi input dari user sebelum pemrosesan</li>
+            </ul>
+
+            <h4>Persiapan Pertemuan 9:</h4>
+            <p>Pada <strong>Pertemuan 9</strong>, kita mulai <strong>Project: Sistem Pendataan Siswa Sederhana</strong>. Gabungkan pengetahuan tentang: Form Processing, Array, Loop, dan Fungsi.</p>
+            <p>Pastikan Anda sudah menguasai Pertemuan 7 dan 8 sebelum mulai project!</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 32px;">
+            <a href="pertemuan_7.html" style="color: var(--text-muted); font-weight: 600; text-decoration: none;">Kembali (Pertemuan 7)</a>
+            <a href="pertemuan_9.html" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Lanjut ke Pertemuan 9</a>
+        </div>
+    </main>
+    <script src="nav.js"></script>
+</body>
+</html>
