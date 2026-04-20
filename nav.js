@@ -21,8 +21,8 @@ const syllabus = [
 function renderSidebar() {
     const sidebarHtml = `
         <div class="logo-container">
-            <h1>BLK <span>Code</span></h1>
-            <p style="font-size: 0.8rem; color: #6B7280; font-weight: 600; margin-top: 4px;">Programmer Komputer</p>
+            <h1>Pelatihan <span>Programmer</span></h1>
+            <p style="font-size: 0.8rem; color: #6B7280; font-weight: 600; margin-top: 4px;">Riski Gamer-Z</p>
         </div>
         <ul class="nav-menu" id="nav-list">
         </ul>
