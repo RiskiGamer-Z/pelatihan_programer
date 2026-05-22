@@ -11,32 +11,36 @@
         <div class="header-meeting">
             <span>Fase Ujian Output</span>
             <h2>Pertemuan 13: Ujian 1 - Website Pribadi</h2>
-            <p style="font-size: 1.1rem; opacity: 0.9;">Siswa membangun website portofolio pribadi yang rapi, responsif, dan memiliki interaksi JavaScript sederhana.</p>
+            <p style="font-size: 1.1rem; opacity: 0.9;">Siswa membangun website pribadi multi-halaman yang rapi, responsif, dan memiliki interaksi JavaScript sederhana.</p>
         </div>
 
         <div class="content-box">
             <h3>A. Tujuan Ujian</h3>
             <ul>
-                <li>Siswa mampu membuat website pribadi dengan struktur halaman yang jelas.</li>
+                <li>Siswa mampu membuat website pribadi dengan file yang dipisah sesuai fungsi.</li>
                 <li>Siswa mampu menerapkan HTML semantik, CSS terstruktur, dan JavaScript dasar.</li>
-                <li>Siswa mampu mempresentasikan hasil project dengan percaya diri.</li>
+                <li>Siswa mampu menampilkan data diri, foto profil, dan kontak sosial media dengan rapi.</li>
             </ul>
         </div>
 
         <div class="content-box">
             <h3>B. Requirement Wajib</h3>
             <ol>
-                <li>Memiliki section: Beranda, Tentang, Skill, Proyek, dan Kontak.</li>
-                <li>Memiliki header navigasi yang bisa mengarah ke tiap section.</li>
+                <li>Website wajib dipisah menjadi beberapa file HTML, tidak boleh digabung menjadi satu file.</li>
+                <li>Struktur minimal terdiri dari <code>index.html</code>, <code>tentang.html</code>, dan <code>kontak.html</code>.</li>
+                <li>Wajib ada file <code>style.css</code> untuk semua halaman.</li>
+                <li>Wajib ada file <code>script.js</code> untuk interaksi dasar.</li>
+                <li><code>index.html</code> berisi halaman beranda / home.</li>
+                <li><code>tentang.html</code> berisi data diri siswa dan foto profil.</li>
+                <li><code>kontak.html</code> berisi sosial media siswa.</li>
                 <li>Tampilan nyaman di desktop dan mobile.</li>
-                <li>Minimal 2 fitur JavaScript, contoh:
+                <li>Minimal fitur JavaScript, contoh:
                     <ul>
                         <li>Tombol scroll ke atas.</li>
-                        <li>Validasi form kontak.</li>
-                        <li>Toggle tema terang/gelap.</li>
+                        
                     </ul>
                 </li>
-                <li>Memiliki identitas diri asli siswa (nama, kelas, kontak).</li>
+                <li>Konten memakai identitas diri asli siswa (nama, kelas, kontak).</li>
             </ol>
         </div>
 
@@ -44,29 +48,52 @@
             <h3>C. Struktur Folder yang Disarankan</h3>
             <pre><code>website_pribadi/
 ├── index.html
+├── tentang.html
+├── kontak.html
 ├── style.css
 ├── script.js
 └── assets/
-    ├── img-profil.jpg
-    └── img-project-1.jpg</code></pre>
-            <p><strong>Catatan:</strong> hindari mencampur semua kode dalam satu file agar mudah dinilai.</p>
+    └── foto-profil.jpg</code></pre>
+            <p><strong>Catatan:</strong> hindari mencampur semua kode dalam satu file agar mudah dinilai. Setiap halaman harus tetap bisa dibuka sendiri dan tetap memakai CSS serta JavaScript yang sama.</p>
         </div>
 
         <div class="content-box">
             <h3>D. Kerangka HTML Minimum</h3>
-            <pre><code>&lt;header&gt;...navigasi...&lt;/header&gt;
+            <p>Karena file harus dipisah, tiap halaman memakai struktur HTML yang saling terhubung lewat navigasi.</p>
+            <pre><code>&lt;header&gt;...navigasi ke index.html, tentang.html, kontak.html...&lt;/header&gt;
 &lt;main&gt;
-    &lt;section id="beranda"&gt;...&lt;/section&gt;
-    &lt;section id="tentang"&gt;...&lt;/section&gt;
-    &lt;section id="skill"&gt;...&lt;/section&gt;
-    &lt;section id="proyek"&gt;...&lt;/section&gt;
-    &lt;section id="kontak"&gt;...form kontak...&lt;/section&gt;
+    &lt;!-- index.html: beranda --&gt;
+    &lt;!-- tentang.html: data diri siswa + foto profil --&gt;
+    &lt;!-- kontak.html: sosial media siswa --&gt;
 &lt;/main&gt;
 &lt;footer&gt;...copyright...&lt;/footer&gt;</code></pre>
+            <p>Contoh file yang dinilai tetap boleh punya elemen tambahan, seperti tombol tema atau form validasi, selama struktur dasarnya tetap terpisah.</p>
         </div>
 
         <div class="content-box">
-            <h3>E. Jadwal Pelaksanaan Ujian</h3>
+            <h3>E. Contoh Isi Tiap Halaman</h3>
+            <ul>
+                <li><strong>index.html:</strong> beranda, sapaan singkat, ringkasan profil, dan navigasi ke halaman lain.</li>
+                <li><strong>tentang.html:</strong> biodata siswa, foto profil, kelas, hobi, dan deskripsi singkat.</li>
+                <li><strong>kontak.html:</strong> daftar sosial media siswa, email, WhatsApp, atau tautan portofolio.</li>
+                <li><strong>style.css:</strong> warna, layout, navbar, kartu profil, dan responsif mobile.</li>
+                <li><strong>script.js:</strong> toggle tema, validasi form, dan scroll ke atas.</li>
+            </ul>
+            <pre><code>&lt;!-- index.html --&gt;
+&lt;a href="index.html"&gt;Beranda&lt;/a&gt;
+&lt;a href="tentang.html"&gt;Tentang&lt;/a&gt;
+&lt;a href="kontak.html"&gt;Kontak&lt;/a&gt;
+
+&lt;!-- tentang.html --&gt;
+&lt;img src="assets/foto-profil.jpg" alt="Foto Profil"&gt;
+&lt;p&gt;Nama: ...&lt;/p&gt;
+
+&lt;!-- kontak.html --&gt;
+&lt;a href="https://instagram.com/..."&gt;Instagram&lt;/a&gt;</code></pre>
+        </div>
+
+        <div class="content-box">
+            <h3>F. Jadwal Pelaksanaan Ujian</h3>
             <ol>
                 <li><strong>13.00 - 15.00:</strong> waktu pengerjaan utama project.</li>
                 <li><strong>15.30 - 17.00:</strong> sesi review, revisi, dan perbaikan kode.</li>
@@ -76,7 +103,7 @@
         </div>
 
         <div class="quest-box">
-            <h3>F. Rubrik Penilaian</h3>
+            <h3>G. Rubrik Penilaian</h3>
             <span class="quest-level">TOTAL 100 POIN</span>
             <ul>
                 <li>Struktur konten dan kelengkapan section (25 poin)</li>
@@ -88,9 +115,9 @@
         </div>
 
         <div class="exercise-box">
-            <h3>G. Checklist Sebelum Submit</h3>
+            <h3>H. Checklist Sebelum Submit</h3>
             <ul>
-                <li>Semua menu di header bisa diklik dan menuju section benar.</li>
+                <li>Semua menu di header bisa diklik dan menuju halaman yang benar.</li>
                 <li>Halaman tetap terbaca dengan baik di layar mobile.</li>
                 <li>Fitur JavaScript berjalan tanpa error di console browser.</li>
                 <li>Nama file rapi, tidak ada spasi acak.</li>
@@ -99,7 +126,7 @@
         </div>
 
         <div class="content-box">
-            <h3>H. Format Pengumpulan</h3>
+            <h3>I. Format Pengumpulan</h3>
             <ol>
                 <li>Kumpulkan satu folder project bernama: <code>ujian13_nama_kelas</code>.</li>
                 <li>Pastikan file utama bernama <code>index.html</code>.</li>
